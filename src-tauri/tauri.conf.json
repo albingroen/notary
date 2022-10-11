@@ -11,8 +11,12 @@
   },
   "tauri": {
     "allowlist": {
-      "all": true
+      "all": true,
+      "fs": {
+        "scope": ["$HOME/notes", "$HOME/notes/**/*"]
+      }
     },
+    "macOSPrivateApi": true,
     "bundle": {
       "active": true,
       "category": "DeveloperTool",
@@ -55,10 +59,12 @@
     "windows": [
       {
         "fullscreen": false,
+        "decorations": false,
         "height": 600,
         "resizable": true,
         "title": "notary",
-        "width": 800
+        "width": 800,
+        "transparent": true
       }
     ]
   }

@@ -5,16 +5,25 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "format": "prettier --write src",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "tauri": "tauri"
   },
   "dependencies": {
+    "@codemirror/lang-markdown": "^6.0.2",
+    "@heroicons/react": "^2.0.12",
+    "@replit/codemirror-vim": "^6.0.3",
     "@tauri-apps/api": "^1.1.0",
+    "@uiw/codemirror-theme-github": "^4.12.4",
+    "@uiw/react-codemirror": "^4.12.4",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-markdown": "^8.0.3",
+    "react-router-dom": "^6.4.2"
   },
   "devDependencies": {
+    "@tailwindcss/typography": "^0.5.7",
     "@tauri-apps/cli": "^1.1.0",
     "@types/node": "^18.7.10",
     "@types/react": "^18.0.15",
@@ -22,6 +31,7 @@
     "@vitejs/plugin-react": "^2.0.0",
     "autoprefixer": "^10.4.12",
     "postcss": "^8.4.17",
+    "prettier": "^2.7.1",
     "tailwindcss": "^3.1.8",
     "typescript": "^4.6.4",
     "vite": "^3.0.2"
