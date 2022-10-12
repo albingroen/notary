@@ -1,8 +1,15 @@
 import CodeMirror, { ReactCodeMirrorRef } from "@uiw/react-codemirror";
+import IconButton from "./components/IconButton";
 import Markdown from "react-markdown";
 import classNames from "./lib/classNames";
-import { DocumentTextIcon, EyeIcon } from "@heroicons/react/20/solid";
-import { fs } from "@tauri-apps/api";
+import {
+  ClipboardDocumentCheckIcon,
+  ClipboardDocumentIcon,
+  DocumentTextIcon,
+  EyeIcon,
+  TrashIcon,
+} from "@heroicons/react/20/solid";
+import { clipboard, dialog, fs } from "@tauri-apps/api";
 import { githubLight } from "@uiw/codemirror-theme-github";
 import { markdown } from "@codemirror/lang-markdown";
 import { useEffect, useRef, useState } from "react";
@@ -33,9 +40,24 @@ export default function Note() {
   });
 
   // Local state
+  const [isValueCopied, setIsValueCopied] = useState<boolean>(false);
   const [value, setValue] = useState<string>("");
 
   const isUpdated = value !== noteContent;
+
+  // Refs
+  const editor = useRef<ReactCodeMirrorRef>(null);
+
+  // Side-effects
+  useEffect(() => {
+    if (typeof noteContent === "string") {
+      setValue(noteContent);
+    }
+
+    if (editor.current?.view && !editor.current.view.hasFocus) {
+      editor.current.view.focus();
+    }
+  }, [noteContent, noteName]);
 
   // Handler
   async function handleSaveNote() {
@@ -58,53 +80,90 @@ export default function Note() {
     queryClient.invalidateQueries(["notes"]);
   }
 
-  // Refs
-  const editor = useRef<ReactCodeMirrorRef>(null);
+  async function handleDeleteNote() {
+    const shouldDeleteNote = await dialog.ask(
+      "Are you sure you want to delete this note?",
+      {
+        title: "Delete note",
+        type: "warning",
+      }
+    );
 
-  // Side-effects
-  useEffect(() => {
-    if (noteContent) {
-      setValue(noteContent);
-    }
+    if (!shouldDeleteNote) return;
 
-    if (editor.current?.view && !editor.current.view.hasFocus) {
-      editor.current.view.focus();
-    }
-  }, [noteContent, noteName]);
+    await fs.removeFile(`notes/${noteName}`, {
+      dir: fs.BaseDirectory.Home,
+    });
+
+    navigate("/");
+
+    queryClient.invalidateQueries(["notes"]);
+  }
+
+  async function handleCopyNote() {
+    if (!value) return;
+
+    await clipboard.writeText(value);
+
+    setIsValueCopied(true);
+
+    setTimeout(() => {
+      setIsValueCopied(false);
+    }, 5000);
+  }
 
   return (
     <>
-      <div className="p-4 border-b flex items-center gap-1">
-        <div className="flex items-center gap-1">
-          <DocumentTextIcon className="w-4 text-gray-400" />
+      <div className="py-3 px-4 border-b flex items-center gap-1">
+        <div className="flex items-center justify-betwen w-full">
+          <div className="flex items-center gap-1">
+            <DocumentTextIcon className="w-4 text-gray-400" />
 
-          <h2
-            contentEditable
-            dangerouslySetInnerHTML={{
-              __html: noteName?.split(".md")[0] ?? "",
-            }}
-            className="focus:outline-none pl-1.5 pr-2 py-2 focus:bg-gray-100 hover:bg-gray-100 border border-transparent focus:border-indigo-400 rounded-md -my-1 transition font-medium leading-none"
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                e.preventDefault();
-                e.stopPropagation();
+            <h2
+              contentEditable
+              dangerouslySetInnerHTML={{
+                __html: noteName?.split(".md")[0] ?? "",
+              }}
+              className="focus:outline-none pl-1.5 pr-2 py-2 hover:bg-gray-100 border border-transparent focus:border-indigo-400 rounded-md -my-1 transition leading-none"
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  e.stopPropagation();
 
-                e.currentTarget.blur();
-              }
-            }}
-            onBlur={(e) => {
-              handleRenameNote(e.currentTarget.innerText);
-            }}
+                  e.currentTarget.blur();
+                }
+              }}
+              onBlur={(e) => {
+                handleRenameNote(e.currentTarget.innerText);
+              }}
+            />
+          </div>
+
+          <div
+            aria-label="Note changed"
+            className={classNames(
+              "h-1.5 w-1.5 bg-indigo-500 rounded-full transition transform origin-center",
+              isUpdated && !isNoteContentLoading ? "scale-100" : "scale-0"
+            )}
           />
         </div>
 
-        <div
-          aria-label="Note changed"
-          className={classNames(
-            "h-1.5 w-1.5 bg-indigo-500 rounded-full transition transform origin-center",
-            isUpdated && !isNoteContentLoading ? "scale-100" : "scale-0"
-          )}
-        />
+        <div className="flex items-center gap-2">
+          <IconButton
+            icon={
+              isValueCopied ? ClipboardDocumentCheckIcon : ClipboardDocumentIcon
+            }
+            title="Copy raw file contents"
+            onClick={handleCopyNote}
+          />
+
+          <IconButton
+            onClick={handleDeleteNote}
+            title="Delete note"
+            icon={TrashIcon}
+            variant="danger"
+          />
+        </div>
       </div>
 
       <div className="h-full" style={{ height: "calc(100% - 55px)" }}>
