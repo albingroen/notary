@@ -105,7 +105,7 @@ export default function NoteSwitcher({ notes }: NoteSwitcherProps) {
         <div className="flex min-h-full items-center justify-center p-4 text-center">
           <Dialog.Panel
             className={classNames(
-              "max-w-2xl border rounded-lg bg-white/80 backdrop-blur shadow-lg shadow-gray-200 p-3 !pb-0"
+              "max-w-2xl border rounded-lg bg-white/80 backdrop-blur shadow-lg shadow-stone-200 p-3 !pb-0"
             )}
           >
             <ul className="flex w-full overflow-x-auto pb-3" id="browse-notes">
@@ -117,7 +117,7 @@ export default function NoteSwitcher({ notes }: NoteSwitcherProps) {
                     id={`browse-${note.name}`}
                     className={classNames(
                       "min-w-[192px] max-w-[192px] w-[192px] flex flex-col gap-2.5 p-2.5 transition rounded-lg",
-                      isBrowsing && "bg-gray-100"
+                      isBrowsing && "bg-stone-100"
                     )}
                   >
                     <div className="h-28 w-full border rounded-md bg-white"></div>

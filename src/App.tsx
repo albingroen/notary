@@ -10,7 +10,7 @@ function App() {
       <CommandPalette />
 
       <main
-        style={{ width: "calc(100% - 280px)" }}
+        style={{ width: "calc(100% - 250px)" }}
         className="flex flex-col bg-white"
       >
         <Outlet />

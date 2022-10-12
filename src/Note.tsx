@@ -82,9 +82,9 @@ export default function Note() {
 
   async function handleDeleteNote() {
     const shouldDeleteNote = await dialog.ask(
-      "Are you sure you want to delete this note?",
+      "Are you sure you want to delete this document?",
       {
-        title: "Delete note",
+        title: "Delete document",
         type: "warning",
       }
     );
@@ -117,14 +117,14 @@ export default function Note() {
       <div className="py-3 px-4 border-b flex items-center gap-1">
         <div className="flex items-center justify-betwen w-full">
           <div className="flex items-center gap-1">
-            <DocumentTextIcon className="w-4 text-gray-400" />
+            <DocumentTextIcon className="w-4 text-stone-400" />
 
             <h2
               contentEditable
               dangerouslySetInnerHTML={{
                 __html: noteName?.split(".md")[0] ?? "",
               }}
-              className="focus:outline-none pl-1.5 pr-2 py-2 hover:bg-gray-100 border border-transparent focus:border-indigo-400 rounded-md -my-1 transition leading-none"
+              className="focus:outline-none pl-1.5 pr-2 py-2 hover:bg-stone-100 border border-transparent focus:border-indigo-400 rounded-md -my-1 transition leading-none"
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   e.preventDefault();
@@ -159,7 +159,7 @@ export default function Note() {
 
           <IconButton
             onClick={handleDeleteNote}
-            title="Delete note"
+            title="Delete document"
             icon={TrashIcon}
             variant="danger"
           />
@@ -181,7 +181,7 @@ export default function Note() {
           }}
           height="100%"
           extensions={[vim(), markdown()]}
-          className="text-lg h-full pl-5"
+          className="text-lg h-full"
           theme={githubLight}
           basicSetup={{
             highlightSelectionMatches: false,
@@ -195,7 +195,7 @@ export default function Note() {
       </div>
 
       {value && (
-        <button className="absolute bottom-5 right-5 shadow-lg shadow-gray-200/80 bg-white border origin-bottom-right hover:transform hover:scale-110 transition h-64 w-56 rounded-lg overflow-hidden group">
+        <button className="absolute bottom-5 right-5 shadow-lg shadow-stone-200/80 bg-white border origin-bottom-right hover:transform hover:scale-110 transition h-64 w-56 rounded-lg overflow-hidden group">
           <div className="h-full w-full relative">
             <div className="p-4 !pr-0">
               <Markdown className="w-full text-left prose prose-sm prose-indigo transform scale-[65%] origin-top-left overflow-y-auto">
@@ -203,7 +203,7 @@ export default function Note() {
               </Markdown>
             </div>
 
-            <div className="absolute inset-0 bg-gray-700/60 backdrop-blur-sm flex flex-col gap-2 items-center justify-center opacity-0 group-hover:opacity-100 transition">
+            <div className="absolute inset-0 bg-stone-700/60 backdrop-blur-sm flex flex-col gap-2 items-center justify-center opacity-0 group-hover:opacity-100 transition">
               <EyeIcon className="w-5 text-white" />
               <p className="font-medium text-lg text-white">Preview</p>
             </div>

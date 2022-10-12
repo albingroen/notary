@@ -46,7 +46,7 @@ export default function CommandPalette() {
       <Command.Dialog
         open={open}
         onOpenChange={setOpen}
-        className="fixed top-1/2 left-1/2 w-full transform -translate-y-1/2 -translate-x-1/2 max-w-lg border rounded-xl bg-black shadow-2xl shadow-stone-300 overflow-hidden h-[350px] flex flex-col"
+        className="fixed top-1/2 left-1/2 w-full transform -translate-y-1/2 -translate-x-1/2 max-w-lg border rounded-lg bg-black shadow-2xl shadow-stone-300 overflow-hidden h-[350px] flex flex-col"
       >
         <Command.Input
           placeholder="Open a note"
@@ -57,7 +57,7 @@ export default function CommandPalette() {
           <Command.Group>
             {notes?.map((note) => (
               <Command.Item
-                className="p-2 rounded-md flex items-center justify-between cursor-pointer"
+                className="py-2 px-2.5 rounded flex items-center justify-between cursor-pointer"
                 onSelect={() => {
                   navigate(`/notes/${note.name}`);
                   setOpen(false);

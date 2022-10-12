@@ -11,9 +11,7 @@
 .cm-editor .cm-content {
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   line-height: 1.6;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  padding-right: 20px;
+  padding: 20px;
 }
 
 .cm-focused {
