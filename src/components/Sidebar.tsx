@@ -1,16 +1,24 @@
-import { FileEntry } from "@tauri-apps/api/fs";
+import classNames from "../lib/classNames";
+import { Link, useParams } from "react-router-dom";
 import { PencilSquareIcon } from "@heroicons/react/20/solid";
 import { appWindow } from "@tauri-apps/api/window";
-import { Link, useParams } from "react-router-dom";
-import classNames from "../lib/classNames";
+import { useQuery } from "react-query";
+import { fs } from "@tauri-apps/api";
 
-interface SidebarProps {
-  notes: FileEntry[];
+async function getNotes() {
+  const files = await fs.readDir("notes", {
+    dir: fs.BaseDirectory.Home,
+  });
+
+  return files.filter((file) => file.name?.endsWith(".md"));
 }
 
-export default function Sidebar({ notes }: SidebarProps) {
+export default function Sidebar() {
+  // Server state
+  const { data: notes } = useQuery(["notes"], getNotes);
+
   // Router state
-  const { path } = useParams<{ path: string }>();
+  const { noteName } = useParams<{ noteName: string }>();
 
   return (
     <aside className="bg-gray-100 w-[280px] flex flex-col border-r">
@@ -54,11 +62,11 @@ export default function Sidebar({ notes }: SidebarProps) {
       </div>
 
       <ul className="flex flex-col mt-5 gap-2.5 px-5 flex-1 overflow-y-auto">
-        {notes.map((note) => {
-          const isActive = note.name === path;
+        {notes?.map((note) => {
+          const isActive = note.name === noteName;
 
           return (
-            <li key={note.path}>
+            <li key={note.name}>
               <Link
                 to={`notes/${note.name}`}
                 className={classNames(

@@ -12,7 +12,7 @@ const router = createMemoryRouter([
     element: <App />,
     children: [
       {
-        path: "notes/:path",
+        path: "notes/:noteName",
         element: <Note />,
       },
     ],
