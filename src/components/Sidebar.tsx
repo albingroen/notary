@@ -1,33 +1,20 @@
 import classNames from "../lib/classNames";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { PencilSquareIcon } from "@heroicons/react/20/solid";
 import { appWindow } from "@tauri-apps/api/window";
-import { useQuery } from "react-query";
 import { getNotes } from "../lib/notes";
-import { fs } from "@tauri-apps/api";
+import { useQuery } from "react-query";
 
-export default function Sidebar() {
+interface SidebarProps {
+  onCreateNote: () => void;
+}
+
+export default function Sidebar({ onCreateNote }: SidebarProps) {
   // Server state
-  const { data: notes, refetch: refetchNotes } = useQuery(["notes"], getNotes);
+  const { data: notes } = useQuery(["notes"], getNotes);
 
   // Router state
-  const navigate = useNavigate();
   const { noteName } = useParams<{ noteName: string }>();
-
-  // Handlers
-  async function handleCreateNote() {
-    const newName = "New note";
-
-    const parsedNewName = newName + ".md";
-
-    await fs.writeFile(`notes/${parsedNewName}`, "", {
-      dir: fs.BaseDirectory.Home,
-    });
-
-    navigate(`/notes/${parsedNewName}`);
-
-    refetchNotes();
-  }
 
   return (
     <aside className="bg-stone-100 w-[250px] flex flex-col border-r">
@@ -37,6 +24,7 @@ export default function Sidebar() {
       >
         <button
           className="bg-[#FF5F57] h-3 w-3 rounded-full cursor-default"
+          tabIndex={-1}
           onClick={() => {
             appWindow.close();
           }}
@@ -45,6 +33,7 @@ export default function Sidebar() {
 
         <button
           className="bg-[#FFBC2E] h-3 w-3 rounded-full cursor-default"
+          tabIndex={-1}
           onClick={() => {
             appWindow.minimize();
           }}
@@ -53,6 +42,7 @@ export default function Sidebar() {
 
         <button
           className="bg-[#29CC42] h-3 w-3 rounded-full cursor-default"
+          tabIndex={-1}
           onClick={() => {
             appWindow.maximize();
           }}
@@ -90,8 +80,8 @@ export default function Sidebar() {
 
       <div className="p-5 w-full">
         <button
-          onClick={handleCreateNote}
-          className="flex justify-between items-center py-2 px-2.5 bg-stone-200 hover:bg-stone-300 rounded-md w-full mt-5 transition text-sm"
+          onClick={onCreateNote}
+          className="flex justify-between items-center p-2.5 bg-stone-200 hover:bg-stone-300 rounded-lg w-full mt-5 transition text-sm"
         >
           <span />
           <span>New document</span>

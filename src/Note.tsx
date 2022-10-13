@@ -5,7 +5,6 @@ import classNames from "./lib/classNames";
 import {
   ClipboardDocumentCheckIcon,
   ClipboardDocumentIcon,
-  DocumentTextIcon,
   EyeIcon,
   TrashIcon,
 } from "@heroicons/react/20/solid";
@@ -69,7 +68,11 @@ export default function Note() {
   }
 
   async function handleRenameNote(newName: string) {
+    if (newName === noteName) return;
+
     const parsedNewName = newName + ".md";
+
+    await handleSaveNote();
 
     await fs.renameFile(`notes/${noteName}`, `notes/${parsedNewName}`, {
       dir: fs.BaseDirectory.Home,
@@ -114,30 +117,26 @@ export default function Note() {
 
   return (
     <>
-      <div className="py-3 px-4 border-b flex items-center gap-1">
+      <div className="p-3 border-b flex items-center gap-1">
         <div className="flex items-center justify-betwen w-full">
-          <div className="flex items-center gap-1">
-            <DocumentTextIcon className="w-4 text-stone-400" />
+          <h2
+            contentEditable
+            dangerouslySetInnerHTML={{
+              __html: noteName?.split(".md")[0] ?? "",
+            }}
+            className="focus:outline-none pl-1.5 pr-2 py-2 hover:bg-stone-100 border border-transparent focus:border-indigo-400 rounded-md -my-1 transition leading-none"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                e.stopPropagation();
 
-            <h2
-              contentEditable
-              dangerouslySetInnerHTML={{
-                __html: noteName?.split(".md")[0] ?? "",
-              }}
-              className="focus:outline-none pl-1.5 pr-2 py-2 hover:bg-stone-100 border border-transparent focus:border-indigo-400 rounded-md -my-1 transition leading-none"
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  e.preventDefault();
-                  e.stopPropagation();
-
-                  e.currentTarget.blur();
-                }
-              }}
-              onBlur={(e) => {
-                handleRenameNote(e.currentTarget.innerText);
-              }}
-            />
-          </div>
+                e.currentTarget.blur();
+              }
+            }}
+            onBlur={(e) => {
+              handleRenameNote(e.currentTarget.innerText);
+            }}
+          />
 
           <div
             aria-label="Note changed"
