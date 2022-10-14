@@ -1,20 +1,64 @@
 import classNames from "../lib/classNames";
-import { Link, useParams } from "react-router-dom";
-import { PencilSquareIcon } from "@heroicons/react/20/solid";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import {
+  MagnifyingGlassIcon,
+  PencilSquareIcon,
+} from "@heroicons/react/20/solid";
 import { appWindow } from "@tauri-apps/api/window";
 import { getNotes } from "../lib/notes";
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
+import { useCallback, useEffect } from "react";
+import { fs } from "@tauri-apps/api";
 
-interface SidebarProps {
-  onCreateNote: () => void;
+function handleNotesFolder() {
+  fs.readDir("notes", { dir: fs.BaseDirectory.Home }).catch(() => {
+    fs.createDir("notes", { dir: fs.BaseDirectory.Home }).catch(() => {});
+  });
 }
 
-export default function Sidebar({ onCreateNote }: SidebarProps) {
+export default function Sidebar() {
+  // Router state
+  const navigate = useNavigate();
+  const { noteName } = useParams<{ noteName: string }>();
+
   // Server state
+  const queryClient = useQueryClient();
   const { data: notes } = useQuery(["notes"], getNotes);
 
-  // Router state
-  const { noteName } = useParams<{ noteName: string }>();
+  // Handlers
+  const handleCreateNote = useCallback(async () => {
+    const newName = "New note";
+
+    const parsedNewName = newName + ".md";
+
+    await fs.writeTextFile(`notes/${parsedNewName}`, "", {
+      dir: fs.BaseDirectory.Home,
+    });
+
+    queryClient.invalidateQueries(["notes"]);
+
+    navigate(`/notes/${parsedNewName}`);
+  }, []);
+
+  // Side-effects
+  useEffect(() => {
+    handleNotesFolder();
+
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.metaKey && e.key === "n") {
+        e.preventDefault();
+        e.stopPropagation();
+
+        handleCreateNote();
+      }
+    }
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
 
   return (
     <aside className="bg-stone-100 w-[250px] flex flex-col border-r">
@@ -50,11 +94,21 @@ export default function Sidebar({ onCreateNote }: SidebarProps) {
         />
       </div>
 
-      <h5 className="text-sm font-medium text-stone-500 mt-5 px-5">
-        Documents
-      </h5>
+      <div className="px-5 mt-5">
+        <h5 className="text-sm font-medium text-stone-400">Documents</h5>
 
-      <ul className="flex flex-col mt-3 gap-[3px] px-5 flex-1 overflow-y-auto">
+        <div className="relative">
+          <MagnifyingGlassIcon className="w-3.5 absolute left-2 top-1/2 transform -translate-y-[1.5px] text-stone-500" />
+
+          <input
+            className="pb-1.5 pt-[5px] pr-2 pl-[27px] w-full border border-transparent rounded-md bg-stone-200 mt-3 text-sm placeholder-stone-500 focus:outline-none hover:bg-stone-200 focus:bg-stone-200 focus:border-stone-500 transition"
+            placeholder="Search"
+            type="search"
+          />
+        </div>
+      </div>
+
+      <ul className="flex flex-col mt-4 px-5 flex-1 overflow-y-auto">
         {notes?.map((note) => {
           const isActive = note.name === noteName;
 
@@ -63,13 +117,11 @@ export default function Sidebar({ onCreateNote }: SidebarProps) {
               <Link
                 to={`notes/${note.name}`}
                 className={classNames(
-                  "flex p-[11px] rounded-md -mx-[11px] transition",
-                  isActive
-                    ? "bg-white shadow-sm shadow-stone-300"
-                    : "hover:bg-stone-200/70 active:bg-white active:shadow-sm active:shadow-stone-300"
+                  "flex py-[5px] transition",
+                  isActive ? "text-black" : "text-stone-500 hover:text-black"
                 )}
               >
-                <h5 className="text-sm w-full truncate leading-none">
+                <h5 className="w-full truncate">
                   {note.name?.split(".md")[0]}
                 </h5>
               </Link>
@@ -80,8 +132,8 @@ export default function Sidebar({ onCreateNote }: SidebarProps) {
 
       <div className="p-5 w-full">
         <button
-          onClick={onCreateNote}
-          className="flex justify-between items-center p-2.5 bg-stone-200 hover:bg-stone-300 rounded-lg w-full mt-5 transition text-sm"
+          onClick={handleCreateNote}
+          className="flex justify-between items-center p-2.5 bg-stone-700 text-white hover:bg-stone-600 font-medium rounded-lg w-full transition text-sm"
         >
           <span />
           <span>New document</span>

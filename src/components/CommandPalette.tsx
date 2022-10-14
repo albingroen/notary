@@ -1,25 +1,38 @@
 import { ArrowRightIcon } from "@heroicons/react/20/solid";
 import { Command } from "cmdk";
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Transition } from "@headlessui/react";
 import { getNotes } from "../lib/notes";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "react-query";
 
-interface CommandPaletteProps {
-  onChangeIsOpen: (value: boolean) => void;
-  isOpen: boolean;
-}
-
-export default function CommandPalette({
-  isOpen,
-  onChangeIsOpen,
-}: CommandPaletteProps) {
+export default function CommandPalette() {
   // Router state
   const navigate = useNavigate();
 
   // Server state
   const { data: notes } = useQuery(["notes"], getNotes);
+
+  // Local state
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  // Side-effects
+  useEffect(() => {
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.metaKey && e.key === "p") {
+        e.preventDefault();
+        e.stopPropagation();
+
+        setIsOpen(($) => !$);
+      }
+    }
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
 
   return (
     <Transition
@@ -34,7 +47,7 @@ export default function CommandPalette({
     >
       <Command.Dialog
         open={isOpen}
-        onOpenChange={onChangeIsOpen}
+        onOpenChange={setIsOpen}
         className="fixed top-1/2 left-1/2 w-full transform -translate-y-1/2 -translate-x-1/2 max-w-lg border rounded-lg bg-black shadow-2xl shadow-stone-300 overflow-hidden h-[350px] flex flex-col"
       >
         <Command.Input
@@ -49,7 +62,7 @@ export default function CommandPalette({
                 className="py-2 px-2.5 rounded flex items-center justify-between cursor-pointer"
                 onSelect={() => {
                   navigate(`/notes/${note.name}`);
-                  onChangeIsOpen(false);
+                  setIsOpen(false);
                 }}
                 key={note.name}
               >

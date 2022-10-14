@@ -34,4 +34,8 @@
   [cmdk-item][aria-selected="true"] .note-arrow {
     @apply opacity-100;
   }
+
+  .prose pre {
+    @apply bg-stone-100 text-black;
+  }
 }

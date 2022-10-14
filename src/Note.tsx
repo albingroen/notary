@@ -2,19 +2,20 @@ import CodeMirror, { ReactCodeMirrorRef } from "@uiw/react-codemirror";
 import IconButton from "./components/IconButton";
 import Markdown from "react-markdown";
 import classNames from "./lib/classNames";
+import { EyeIcon, TrashIcon } from "@heroicons/react/20/solid";
 import {
+  FolderIcon,
   ClipboardDocumentCheckIcon,
   ClipboardDocumentIcon,
-  EyeIcon,
-  TrashIcon,
-} from "@heroicons/react/20/solid";
-import { clipboard, dialog, fs } from "@tauri-apps/api";
+} from "@heroicons/react/24/solid";
+import { clipboard, dialog, fs, path, shell } from "@tauri-apps/api";
 import { githubLight } from "@uiw/codemirror-theme-github";
 import { markdown } from "@codemirror/lang-markdown";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useQuery, useQueryClient } from "react-query";
 import { vim } from "@replit/codemirror-vim";
+import NotePreview from "./components/NotePreview";
 
 function getNote(noteName: string) {
   return fs.readTextFile(`notes/${noteName}`, {
@@ -40,6 +41,7 @@ export default function Note() {
 
   // Local state
   const [isValueCopied, setIsValueCopied] = useState<boolean>(false);
+  const [isPreviewing, setIsPreviewing] = useState<boolean>(false);
   const [value, setValue] = useState<string>("");
 
   const isUpdated = value !== noteContent;
@@ -115,8 +117,22 @@ export default function Note() {
     }, 5000);
   }
 
+  async function handleShowNoteInFinder() {
+    const homeDir = await path.homeDir();
+    return shell.open(`${homeDir}/notes`);
+  }
+
   return (
     <>
+      {isPreviewing && value && (
+        <NotePreview
+          noteContent={value}
+          onClose={() => {
+            setIsPreviewing(false);
+          }}
+        />
+      )}
+
       <div className="p-3 border-b flex items-center gap-1">
         <div className="flex items-center justify-betwen w-full">
           <h2
@@ -149,6 +165,12 @@ export default function Note() {
 
         <div className="flex items-center gap-2">
           <IconButton
+            icon={FolderIcon}
+            title="Show document in finder"
+            onClick={handleShowNoteInFinder}
+          />
+
+          <IconButton
             icon={
               isValueCopied ? ClipboardDocumentCheckIcon : ClipboardDocumentIcon
             }
@@ -167,6 +189,7 @@ export default function Note() {
 
       <div className="h-full" style={{ height: "calc(100% - 55px)" }}>
         <CodeMirror
+          autoFocus
           value={value}
           ref={editor}
           onChange={setValue}
@@ -194,15 +217,25 @@ export default function Note() {
       </div>
 
       {value && (
-        <button className="absolute bottom-5 right-5 shadow-lg shadow-stone-200/80 bg-white border origin-bottom-right hover:transform hover:scale-110 transition h-64 w-56 rounded-lg overflow-hidden group">
+        <button
+          onClick={() => {
+            setIsPreviewing(true);
+          }}
+          className={classNames(
+            "absolute bottom-5 right-5 shadow-lg shadow-stone-200/80 bg-white border border-stone-200 origin-bottom-right transform transition h-64 w-56 rounded-lg overflow-hidden group",
+            isPreviewing
+              ? "scale-90 opacity-0 -rotate-3"
+              : "scale-100 opacity-100 rotate-0 hover:scale-110"
+          )}
+        >
           <div className="h-full w-full relative">
             <div className="p-4 !pr-0">
-              <Markdown className="w-full text-left prose prose-sm prose-indigo transform scale-[65%] origin-top-left overflow-y-auto">
+              <Markdown className="w-full text-left prose prose-headings:font-medium prose-sm prose-indigo transform scale-[65%] origin-top-left overflow-y-auto">
                 {value}
               </Markdown>
             </div>
 
-            <div className="absolute inset-0 bg-stone-700/60 backdrop-blur-sm flex flex-col gap-2 items-center justify-center opacity-0 group-hover:opacity-100 transition">
+            <div className="absolute inset-0 bg-stone-700/60 group-active:bg-stone-700/80 backdrop-blur-sm flex flex-col gap-1 items-center justify-center opacity-0 group-hover:opacity-100 transition">
               <EyeIcon className="w-5 text-white" />
               <p className="font-medium text-lg text-white">Preview</p>
             </div>
