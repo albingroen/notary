@@ -7,9 +7,10 @@ import {
 import { appWindow } from "@tauri-apps/api/window";
 import { getNotes } from "../lib/notes";
 import { useQuery, useQueryClient } from "react-query";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { fs } from "@tauri-apps/api";
 import { register, unregisterAll } from "@tauri-apps/api/globalShortcut";
+import SearchNotes from "./SearchNotes";
 
 function handleNotesFolder() {
   fs.readDir("notes", { dir: fs.BaseDirectory.Home }).catch(() => {
@@ -25,6 +26,9 @@ export default function Sidebar() {
   // Server state
   const queryClient = useQueryClient();
   const { data: notes } = useQuery(["notes"], getNotes);
+
+  // Local state
+  const [search, setSearch] = useState<string>("");
 
   // Handlers
   const handleCreateNote = useCallback(async () => {
@@ -55,7 +59,7 @@ export default function Sidebar() {
   }, []);
 
   return (
-    <aside className="bg-stone-100 w-[250px] flex flex-col border-r">
+    <aside className="bg-stone-100 w-[250px] flex flex-col border-r border-stone-200">
       <div
         data-tauri-drag-region
         className="flex items-center gap-2 pt-5 px-5 w-full"
@@ -95,34 +99,53 @@ export default function Sidebar() {
           <MagnifyingGlassIcon className="w-3.5 absolute left-2 top-1/2 transform -translate-y-[1.5px] text-stone-500" />
 
           <input
-            className="pb-1.5 pt-[5px] pr-2 pl-[27px] w-full border border-transparent rounded-md bg-stone-200 mt-3 text-sm placeholder-stone-500 focus:outline-none hover:bg-stone-200 focus:bg-stone-200 focus:border-stone-500 transition"
+            className="py-1.5 pr-2 pl-[27px] w-full border border-transparent rounded-md bg-stone-200 mt-3 text-sm placeholder-stone-500 focus:outline-none hover:bg-stone-200 focus:bg-stone-200 focus:border-stone-500 transition"
+            onChange={(e) => {
+              setSearch(e.currentTarget.value);
+            }}
             placeholder="Search"
+            value={search}
             type="search"
           />
         </div>
       </div>
 
-      <ul className="flex flex-col mt-4 px-5 flex-1 overflow-y-auto">
-        {notes?.map((note) => {
-          const isActive = note.name === noteName;
+      {search && notes ? (
+        <SearchNotes search={search} notes={notes} />
+      ) : (
+        <ul className="flex flex-col mt-4 px-5 flex-1 overflow-y-auto">
+          {notes
+            ?.sort((a, b) => {
+              if (a.metadata?.createdAt > b.metadata?.createdAt) {
+                return -1;
+              } else if (b.metadata?.createdAt > a.metadata?.createdAt) {
+                return 1;
+              }
+              return 0;
+            })
+            .map((note) => {
+              const isActive = note.name === noteName;
 
-          return (
-            <li key={note.name}>
-              <Link
-                to={`notes/${note.name}`}
-                className={classNames(
-                  "flex py-[5px] transition",
-                  isActive ? "text-black" : "text-stone-500 hover:text-black"
-                )}
-              >
-                <h5 className="w-full truncate">
-                  {note.name?.split(".md")[0]}
-                </h5>
-              </Link>
-            </li>
-          );
-        })}
-      </ul>
+              return (
+                <li key={note.name}>
+                  <Link
+                    to={`notes/${note.name}`}
+                    className={classNames(
+                      "flex py-[5px] transition",
+                      isActive
+                        ? "text-black"
+                        : "text-stone-500 hover:text-black"
+                    )}
+                  >
+                    <h5 className="w-full truncate">
+                      {note.name?.split(".md")[0]}
+                    </h5>
+                  </Link>
+                </li>
+              );
+            })}
+        </ul>
+      )}
 
       <div className="p-5 w-full">
         <button

@@ -2,7 +2,11 @@ import CodeMirror, { ReactCodeMirrorRef } from "@uiw/react-codemirror";
 import IconButton from "./components/IconButton";
 import Markdown from "react-markdown";
 import classNames from "./lib/classNames";
-import { EyeIcon, TrashIcon } from "@heroicons/react/20/solid";
+import {
+  EyeIcon,
+  TrashIcon,
+  InformationCircleIcon,
+} from "@heroicons/react/20/solid";
 import {
   FolderIcon,
   ClipboardDocumentCheckIcon,
@@ -16,11 +20,25 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useQuery, useQueryClient } from "react-query";
 import { vim } from "@replit/codemirror-vim";
 import NotePreview from "./components/NotePreview";
+import { metadata } from "tauri-plugin-fs-extra-api";
+import { formatBytes } from "./lib/utils";
 
-function getNote(noteName: string) {
-  return fs.readTextFile(`notes/${noteName}`, {
+async function getNote(noteName: string) {
+  const content = await fs.readTextFile(`notes/${noteName}`, {
     dir: fs.BaseDirectory.Home,
   });
+
+  const homeDir = await path.homeDir();
+
+  const notePath = `${homeDir}notes/${noteName}`;
+
+  const md = await metadata(notePath);
+
+  return {
+    content,
+    metadata: md,
+    path: notePath,
+  };
 }
 
 export default function Note() {
@@ -32,14 +50,17 @@ export default function Note() {
   const queryClient = useQueryClient();
 
   const {
-    data: noteContent,
-    refetch: refetchNoteContent,
-    isLoading: isNoteContentLoading,
+    data: note,
+    refetch: refetchNote,
+    isLoading: isNoteLoading,
   } = useQuery([noteName], () => getNote(noteName!), {
     enabled: Boolean(noteName),
   });
 
+  const noteContent = note?.content;
+
   // Local state
+  const [isShowingMetadata, setIsShowingMetadata] = useState<boolean>(false);
   const [isValueCopied, setIsValueCopied] = useState<boolean>(false);
   const [isPreviewing, setIsPreviewing] = useState<boolean>(false);
   const [value, setValue] = useState<string>("");
@@ -66,7 +87,7 @@ export default function Note() {
       dir: fs.BaseDirectory.Home,
     });
 
-    refetchNoteContent();
+    refetchNote();
   }
 
   async function handleRenameNote(newName: string) {
@@ -133,37 +154,41 @@ export default function Note() {
         />
       )}
 
-      <div className="p-3 border-b flex items-center gap-1">
-        <div className="flex items-center justify-betwen w-full">
-          <h2
-            contentEditable
-            dangerouslySetInnerHTML={{
-              __html: noteName?.split(".md")[0] ?? "",
-            }}
-            className="focus:outline-none pl-1.5 pr-2 py-2 hover:bg-stone-100 border border-transparent focus:border-indigo-400 rounded-md -my-1 transition leading-none"
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                e.preventDefault();
-                e.stopPropagation();
+      <div className="border-b border-stone-200 flex items-center">
+        <div className="flex justify-betwen w-full">
+          <div className="p-3 flex items-center gap-1">
+            <h2
+              contentEditable
+              dangerouslySetInnerHTML={{
+                __html: noteName?.split(".md")[0] ?? "",
+              }}
+              className="focus:outline-none pl-1.5 pr-2 py-2 hover:bg-stone-100 border border-transparent focus:border-indigo-400 rounded-md -my-1 transition leading-none"
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  e.stopPropagation();
 
-                e.currentTarget.blur();
-              }
-            }}
-            onBlur={(e) => {
-              handleRenameNote(e.currentTarget.innerText);
-            }}
-          />
+                  e.currentTarget.blur();
+                }
+              }}
+              onBlur={(e) => {
+                handleRenameNote(e.currentTarget.innerText);
+              }}
+            />
 
-          <div
-            aria-label="Note changed"
-            className={classNames(
-              "h-1.5 w-1.5 bg-indigo-500 rounded-full transition transform origin-center",
-              isUpdated && !isNoteContentLoading ? "scale-100" : "scale-0"
-            )}
-          />
+            <div
+              aria-label="Note changed"
+              className={classNames(
+                "h-1.5 w-1.5 bg-indigo-500 rounded-full transition transform origin-center",
+                isUpdated && !isNoteLoading ? "scale-100" : "scale-0"
+              )}
+            />
+          </div>
+
+          <div data-tauri-drag-region className="flex-1" />
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 p-3">
           <IconButton
             icon={FolderIcon}
             title="Show document in finder"
@@ -179,6 +204,18 @@ export default function Note() {
           />
 
           <IconButton
+            onClick={() => {
+              setIsShowingMetadata(!isShowingMetadata);
+            }}
+            title={
+              isShowingMetadata
+                ? "Hide document information"
+                : "Show document information"
+            }
+            icon={InformationCircleIcon}
+          />
+
+          <IconButton
             onClick={handleDeleteNote}
             title="Delete document"
             icon={TrashIcon}
@@ -187,61 +224,126 @@ export default function Note() {
         </div>
       </div>
 
-      <div className="h-full" style={{ height: "calc(100% - 55px)" }}>
-        <CodeMirror
-          autoFocus
-          value={value}
-          ref={editor}
-          onChange={setValue}
-          onKeyDown={async (e) => {
-            if (e.metaKey && e.key === "s") {
-              e.preventDefault();
-              e.stopPropagation();
+      <div className="h-full flex" style={{ height: "calc(100% - 55px)" }}>
+        <div className="h-full w-full relative flex-1 overflow-hidden">
+          <CodeMirror
+            autoFocus
+            value={value}
+            ref={editor}
+            onChange={setValue}
+            onKeyDown={async (e) => {
+              if (e.metaKey && e.key === "s") {
+                e.preventDefault();
+                e.stopPropagation();
 
-              handleSaveNote();
-            }
-          }}
-          height="100%"
-          extensions={[vim(), markdown()]}
-          className="text-lg h-full"
-          theme={githubLight}
-          basicSetup={{
-            highlightSelectionMatches: false,
-            highlightSpecialChars: false,
-            highlightActiveLine: false,
-            bracketMatching: false,
-            lineNumbers: false,
-            foldGutter: false,
-          }}
-        />
-      </div>
+                handleSaveNote();
+              }
+            }}
+            height="100%"
+            extensions={[vim(), markdown()]}
+            className="text-lg h-full w-full"
+            theme={githubLight}
+            basicSetup={{
+              highlightSelectionMatches: false,
+              highlightSpecialChars: false,
+              highlightActiveLine: false,
+              bracketMatching: false,
+              lineNumbers: false,
+              foldGutter: false,
+            }}
+          />
 
-      {value && (
-        <button
-          onClick={() => {
-            setIsPreviewing(true);
-          }}
-          className={classNames(
-            "absolute bottom-5 right-5 shadow-lg shadow-stone-200/80 bg-white border border-stone-200 origin-bottom-right transform transition h-64 w-56 rounded-lg overflow-hidden group",
-            isPreviewing
-              ? "scale-90 opacity-0 -rotate-3"
-              : "scale-100 opacity-100 rotate-0 hover:scale-110"
+          {value && (
+            <button
+              onClick={() => {
+                setIsPreviewing(true);
+              }}
+              className={classNames(
+                "absolute bottom-5 right-5 shadow-lg shadow-stone-200/80 bg-white border border-stone-200 origin-bottom-right transform transition h-64 w-56 rounded-lg overflow-hidden group",
+                isPreviewing
+                  ? "scale-90 opacity-0 -rotate-3"
+                  : "scale-100 opacity-100 rotate-0 hover:scale-110"
+              )}
+            >
+              <div className="h-full w-full relative">
+                <div className="p-4 !pr-0">
+                  <Markdown className="w-full text-left prose prose-headings:font-medium prose-sm prose-indigo transform scale-[65%] origin-top-left overflow-y-auto">
+                    {value}
+                  </Markdown>
+                </div>
+
+                <div className="absolute inset-0 bg-stone-700/60 group-active:bg-stone-700/80 backdrop-blur-sm flex flex-col gap-1 items-center justify-center opacity-0 group-hover:opacity-100 transition">
+                  <EyeIcon className="w-5 text-white" />
+                  <p className="font-medium text-lg text-white">Preview</p>
+                </div>
+              </div>
+            </button>
           )}
-        >
-          <div className="h-full w-full relative">
-            <div className="p-4 !pr-0">
-              <Markdown className="w-full text-left prose prose-headings:font-medium prose-sm prose-indigo transform scale-[65%] origin-top-left overflow-y-auto">
-                {value}
-              </Markdown>
-            </div>
+        </div>
 
-            <div className="absolute inset-0 bg-stone-700/60 group-active:bg-stone-700/80 backdrop-blur-sm flex flex-col gap-1 items-center justify-center opacity-0 group-hover:opacity-100 transition">
-              <EyeIcon className="w-5 text-white" />
-              <p className="font-medium text-lg text-white">Preview</p>
-            </div>
-          </div>
-        </button>
-      )}
+        {isShowingMetadata && note?.metadata && (
+          <aside className="w-[400px] bg-white border-l border-stone-200 p-3.5">
+            <ul className="flex flex-col rounded-md overflow-hidden border border-stone-200">
+              <MetadataItem
+                value={note.metadata.createdAt.toString()}
+                label="Created"
+              />
+
+              <MetadataItem
+                value={note.metadata.modifiedAt.toString()}
+                label="Modified"
+                isEven
+              />
+
+              <MetadataItem
+                value={note.path.replaceAll(" ", "\\ ")}
+                label="Path"
+              />
+
+              <MetadataItem
+                value={
+                  note.metadata.blksize
+                    ? formatBytes(note.metadata.blksize)
+                    : "Uknown"
+                }
+                label="File size"
+                isEven
+              />
+            </ul>
+          </aside>
+        )}
+      </div>
     </>
+  );
+}
+
+function MetadataItem({
+  isEven,
+  label,
+  value,
+}: {
+  label: string;
+  value: string;
+  isEven?: boolean;
+}) {
+  return (
+    <li
+      className={classNames(
+        "px-4 flex items-center justify-between gap-8 text-sm",
+        isEven ? "bg-white" : "bg-stone-100"
+      )}
+    >
+      <h5 className="text-stone-500 w-20">{label}</h5>{" "}
+      <button
+        type="button"
+        title="Copy to clipboard"
+        className="flex-1 text-right truncate cursor-copy hover:text-indigo-600 transition py-3.5 active:text-indigo-900 focus:text-indigo-900 focus:outline-none"
+        onClick={() => {
+          clipboard.writeText(value);
+        }}
+      >
+        {value}
+      </button>
+    </li>
   );
 }
