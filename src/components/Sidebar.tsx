@@ -9,6 +9,7 @@ import { getNotes } from "../lib/notes";
 import { useQuery, useQueryClient } from "react-query";
 import { useCallback, useEffect } from "react";
 import { fs } from "@tauri-apps/api";
+import { register, unregisterAll } from "@tauri-apps/api/globalShortcut";
 
 function handleNotesFolder() {
   fs.readDir("notes", { dir: fs.BaseDirectory.Home }).catch(() => {
@@ -44,19 +45,12 @@ export default function Sidebar() {
   useEffect(() => {
     handleNotesFolder();
 
-    function handleKeyDown(e: KeyboardEvent) {
-      if (e.metaKey && e.key === "n") {
-        e.preventDefault();
-        e.stopPropagation();
-
-        handleCreateNote();
-      }
-    }
-
-    document.addEventListener("keydown", handleKeyDown);
+    register("Command+N", () => {
+      handleCreateNote();
+    }).catch(() => {});
 
     return () => {
-      document.removeEventListener("keydown", handleKeyDown);
+      unregisterAll();
     };
   }, []);
 

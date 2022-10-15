@@ -46,13 +46,13 @@ export default function NotePreview({
         <Transition.Child
           leaveFrom="opacity-100 scale-100"
           enterTo="opacity-100 scale-100"
-          enterFrom="opacity-0 scale-75"
+          enterFrom="opacity-0 scale-90"
           enter="ease-out duration-200"
-          leaveTo="opacity-0 scale-75"
+          leaveTo="opacity-0 scale-90"
           leave="ease-in duration-200"
           as={Fragment}
         >
-          <Dialog.Panel className="bg-white rounded-lg w-full max-w-screen-sm min-h-full p-8 shadow-2xl shadow-stone-400/70 mx-auto">
+          <Dialog.Panel className="bg-white rounded-lg w-full max-w-screen-md min-h-full p-10 shadow-2xl shadow-stone-400/70 mx-auto">
             <article className="prose prose-stone prose-headings:font-medium">
               <ReactMarkdown>{noteContent}</ReactMarkdown>
             </article>

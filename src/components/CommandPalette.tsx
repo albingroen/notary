@@ -5,6 +5,7 @@ import { Transition } from "@headlessui/react";
 import { getNotes } from "../lib/notes";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "react-query";
+import { register } from "@tauri-apps/api/globalShortcut";
 
 export default function CommandPalette() {
   // Router state
@@ -18,20 +19,9 @@ export default function CommandPalette() {
 
   // Side-effects
   useEffect(() => {
-    function handleKeyDown(e: KeyboardEvent) {
-      if (e.metaKey && e.key === "p") {
-        e.preventDefault();
-        e.stopPropagation();
-
-        setIsOpen(($) => !$);
-      }
-    }
-
-    document.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-    };
+    register("Command+P", () => {
+      setIsOpen(($) => !$);
+    }).catch(() => {});
   }, []);
 
   return (

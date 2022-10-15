@@ -6,7 +6,7 @@
     "distDir": "../dist"
   },
   "package": {
-    "productName": "notary",
+    "productName": "Notary",
     "version": "0.0.0"
   },
   "tauri": {
@@ -60,11 +60,11 @@
       {
         "fullscreen": false,
         "decorations": false,
-        "height": 600,
+        "transparent": true,
+        "height": 1080,
         "resizable": true,
-        "title": "notary",
-        "width": 800,
-        "transparent": true
+        "title": "Notary",
+        "width": 1920
       }
     ]
   }
