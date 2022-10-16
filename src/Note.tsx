@@ -20,25 +20,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useQuery, useQueryClient } from "react-query";
 import { vim } from "@replit/codemirror-vim";
 import NotePreview from "./components/NotePreview";
-import { metadata } from "tauri-plugin-fs-extra-api";
-import { formatBytes } from "./lib/utils";
+import NoteMetadata from "./components/NoteMetadata";
 
 async function getNote(noteName: string) {
-  const content = await fs.readTextFile(`notes/${noteName}`, {
+  return fs.readTextFile(`notes/${noteName}`, {
     dir: fs.BaseDirectory.Home,
   });
-
-  const homeDir = await path.homeDir();
-
-  const notePath = `${homeDir}notes/${noteName}`;
-
-  const md = await metadata(notePath);
-
-  return {
-    content,
-    metadata: md,
-    path: notePath,
-  };
 }
 
 export default function Note() {
@@ -50,14 +37,12 @@ export default function Note() {
   const queryClient = useQueryClient();
 
   const {
-    data: note,
-    refetch: refetchNote,
-    isLoading: isNoteLoading,
+    data: noteContent,
+    refetch: refetchNoteContent,
+    isLoading: isNoteContentLoading,
   } = useQuery([noteName], () => getNote(noteName!), {
     enabled: Boolean(noteName),
   });
-
-  const noteContent = note?.content;
 
   // Local state
   const [isShowingMetadata, setIsShowingMetadata] = useState<boolean>(false);
@@ -87,7 +72,7 @@ export default function Note() {
       dir: fs.BaseDirectory.Home,
     });
 
-    refetchNote();
+    queryClient.invalidateQueries([noteName]);
   }
 
   async function handleRenameNote(newName: string) {
@@ -180,7 +165,7 @@ export default function Note() {
               aria-label="Note changed"
               className={classNames(
                 "h-1.5 w-1.5 bg-indigo-500 rounded-full transition transform origin-center",
-                isUpdated && !isNoteLoading ? "scale-100" : "scale-0"
+                isUpdated && !isNoteContentLoading ? "scale-100" : "scale-0"
               )}
             />
           </div>
@@ -281,69 +266,8 @@ export default function Note() {
           )}
         </div>
 
-        {isShowingMetadata && note?.metadata && (
-          <aside className="w-[400px] bg-white border-l border-stone-200 p-3.5">
-            <ul className="flex flex-col rounded-md overflow-hidden border border-stone-200">
-              <MetadataItem
-                value={note.metadata.createdAt.toString()}
-                label="Created"
-              />
-
-              <MetadataItem
-                value={note.metadata.modifiedAt.toString()}
-                label="Modified"
-                isEven
-              />
-
-              <MetadataItem
-                value={note.path.replaceAll(" ", "\\ ")}
-                label="Path"
-              />
-
-              <MetadataItem
-                value={
-                  note.metadata.blksize
-                    ? formatBytes(note.metadata.blksize)
-                    : "Uknown"
-                }
-                label="File size"
-                isEven
-              />
-            </ul>
-          </aside>
-        )}
+        {isShowingMetadata && noteName && <NoteMetadata noteName={noteName} />}
       </div>
     </>
-  );
-}
-
-function MetadataItem({
-  isEven,
-  label,
-  value,
-}: {
-  label: string;
-  value: string;
-  isEven?: boolean;
-}) {
-  return (
-    <li
-      className={classNames(
-        "px-4 flex items-center justify-between gap-8 text-sm",
-        isEven ? "bg-white" : "bg-stone-100"
-      )}
-    >
-      <h5 className="text-stone-500 w-20">{label}</h5>{" "}
-      <button
-        type="button"
-        title="Copy to clipboard"
-        className="flex-1 text-right truncate cursor-copy hover:text-indigo-600 transition py-3.5 active:text-indigo-900 focus:text-indigo-900 focus:outline-none"
-        onClick={() => {
-          clipboard.writeText(value);
-        }}
-      >
-        {value}
-      </button>
-    </li>
   );
 }
