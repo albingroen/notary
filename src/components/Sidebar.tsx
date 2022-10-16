@@ -5,7 +5,7 @@ import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import { fs } from "@tauri-apps/api";
 import { getNotes } from "../lib/notes";
 import { register, unregisterAll } from "@tauri-apps/api/globalShortcut";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useQuery, useQueryClient } from "react-query";
 
 function handleNotesFolder() {
@@ -26,6 +26,9 @@ export default function Sidebar() {
   // Local state
   const [search, setSearch] = useState<string>("");
 
+  // Refs
+  const searchRef = useRef<HTMLInputElement>(null);
+
   // Handlers
   const handleCreateNote = useCallback(async () => {
     const newName = "New note";
@@ -41,12 +44,20 @@ export default function Sidebar() {
     navigate(`/notes/${parsedNewName}`);
   }, []);
 
+  const handleSearch = useCallback(() => {
+    searchRef.current?.focus();
+  }, [searchRef]);
+
   // Side-effects
   useEffect(() => {
     handleNotesFolder();
 
     register("Command+N", () => {
       handleCreateNote();
+    }).catch(() => {});
+
+    register("Command+Shift+F", () => {
+      handleSearch();
     }).catch(() => {});
 
     return () => {
@@ -70,6 +81,7 @@ export default function Sidebar() {
               setSearch(e.currentTarget.value);
             }}
             placeholder="Search"
+            ref={searchRef}
             value={search}
           />
         </div>
@@ -115,7 +127,7 @@ export default function Sidebar() {
       <div className="p-5 w-full border-r border-stone-200 dark:border-stone-700">
         <button
           onClick={handleCreateNote}
-          className="flex justify-between items-center py-2.5 px-3 bg-stone-700 dark:bg-stone-600 text-white hover:bg-stone-600 dark:hover:bg-stone-500 font-medium rounded-lg w-full transition text-sm"
+          className="flex justify-between items-center py-2.5 px-3 bg-emerald-600 dark:bg-emerald-800 text-white hover:bg-emerald-500 dark:hover:bg-emerald-700 font-medium rounded-lg w-full transition text-sm"
         >
           <span />
           <span>New document</span>
