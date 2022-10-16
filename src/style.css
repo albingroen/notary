@@ -9,7 +9,7 @@
 }
 
 .cm-editor .cm-content {
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: Inter var, Inter, -apple-system, BlinkMacSystemFont, sans-serif;
   line-height: 1.6;
   padding: 20px;
 }

@@ -1,16 +1,12 @@
+import SearchNotes from "./SearchNotes";
 import classNames from "../lib/classNames";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import {
-  MagnifyingGlassIcon,
-  PencilSquareIcon,
-} from "@heroicons/react/20/solid";
-import { appWindow } from "@tauri-apps/api/window";
-import { getNotes } from "../lib/notes";
-import { useQuery, useQueryClient } from "react-query";
-import { useCallback, useEffect, useState } from "react";
+import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import { fs } from "@tauri-apps/api";
+import { getNotes } from "../lib/notes";
 import { register, unregisterAll } from "@tauri-apps/api/globalShortcut";
-import SearchNotes from "./SearchNotes";
+import { useCallback, useEffect, useState } from "react";
+import { useQuery, useQueryClient } from "react-query";
 
 function handleNotesFolder() {
   fs.readDir("notes", { dir: fs.BaseDirectory.Home }).catch(() => {
@@ -119,11 +115,11 @@ export default function Sidebar() {
       <div className="p-5 w-full border-r border-stone-200 dark:border-stone-700">
         <button
           onClick={handleCreateNote}
-          className="flex justify-between items-center p-2.5 bg-stone-700 dark:bg-stone-600 text-white hover:bg-stone-600 dark:hover:bg-stone-500 font-medium rounded-lg w-full transition text-sm"
+          className="flex justify-between items-center py-2.5 px-3 bg-stone-700 dark:bg-stone-600 text-white hover:bg-stone-600 dark:hover:bg-stone-500 font-medium rounded-lg w-full transition text-sm"
         >
           <span />
           <span>New document</span>
-          <PencilSquareIcon className="w-3.5" />
+          <span>&rarr;</span>
         </button>
       </div>
     </aside>
