@@ -44,29 +44,29 @@ export default function NoteMetadata({ noteName }: NoteMetadataProps) {
   );
 
   return (
-    <aside className="w-[400px] bg-white dark:bg-stone-800 border-l border-stone-200 dark:border-stone-700 p-3.5">
+    <aside className="w-[400px] bg-white dark:bg-stone-800 p-3">
       {data ? (
-        <ul className="flex flex-col rounded-md overflow-hidden border border-stone-200 dark:border-stone-700">
+        <ul className="flex flex-col rounded-md overflow-hidden border border-stone-200 dark:border-stone-700 h-full">
           <MetadataItem
             value={data.createdAt ? data.createdAt.toString() : "Unknown"}
             label="Created"
+            isEven
           />
 
           <MetadataItem
             value={data.modifiedAt ? data.modifiedAt.toString() : "Unknown"}
             label="Modified"
-            isEven
           />
 
           <MetadataItem
             value={data.path ? data.path.replaceAll(" ", "\\ ") : "Unknown"}
             label="Path"
+            isEven
           />
 
           <MetadataItem
             value={data.blksize ? formatBytes(data.blksize) : "Uknown"}
             label="File size"
-            isEven
           />
         </ul>
       ) : isLoading ? (
@@ -90,9 +90,9 @@ function MetadataItem({
   return (
     <li
       className={classNames(
-        "px-4 flex items-center justify-between gap-8 text-sm",
+        "px-4 flex items-center justify-between gap-8 text-sm font-mono tracking-tight",
         isEven
-          ? "bg-white dark:bg-stone-800"
+          ? "bg-white dark:bg-stone-700/20"
           : "bg-stone-100 dark:bg-stone-700/50"
       )}
     >

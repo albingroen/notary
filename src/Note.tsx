@@ -167,7 +167,7 @@ export default function Note() {
               dangerouslySetInnerHTML={{
                 __html: noteName?.split(".md")[0] ?? "",
               }}
-              className="focus:outline-none pl-1.5 pr-2 py-2 hover:bg-stone-100 dark:hover:bg-stone-600 border border-transparent focus:border-indigo-400 dark:focus:border-indigo-200 rounded -my-1 transition leading-none"
+              className="text-stone-500 dark:text-stone-400 focus:outline-none pl-1.5 pr-2 py-2 hover:text-black dark:hover:text-white focus:text-black dark:focus:text-white hover:bg-stone-100 dark:hover:bg-stone-600 border border-transparent focus:border-indigo-400 dark:focus:border-indigo-200 rounded -my-1 transition leading-none"
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   e.preventDefault();
@@ -264,7 +264,7 @@ export default function Note() {
                 setIsPreviewing(true);
               }}
               className={classNames(
-                "absolute bottom-5 right-5 shadow-lg shadow-stone-200/80 dark:shadow-stone-900/50 bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-700 origin-bottom-right transform transition h-64 w-56 rounded-lg overflow-hidden group duration-300",
+                "absolute bottom-3 right-1.5 shadow-lg shadow-stone-200/80 dark:shadow-stone-900/50 bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-700 origin-bottom-right transform transition h-64 w-56 rounded-lg overflow-hidden group duration-300",
                 isPreviewing
                   ? "scale-50 opacity-0 -rotate-3"
                   : "scale-100 opacity-100 rotate-0 hover:scale-110"
