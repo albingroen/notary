@@ -65,7 +65,7 @@ export default function Sidebar() {
           <MagnifyingGlassIcon className="w-3.5 absolute left-2 top-1/2 transform -translate-y-[1.5px] text-stone-500" />
 
           <input
-            className="py-1.5 pr-2 pl-[27px] w-full border border-transparent rounded-md bg-stone-200 dark:bg-stone-700/30 dark:border dark:border-stone-700 mt-3 text-sm placeholder-stone-500 focus:outline-none hover:bg-stone-200 dark:hover:bg-stone-800 focus:bg-stone-200 dark:focus:bg-stone-800 focus:border-stone-500 dark:focus:border-stone-600 transition"
+            className="py-1.5 pr-2 pl-[27px] w-full border border-transparent rounded-md bg-stone-200 dark:bg-transparent dark:border dark:border-stone-700 mt-3 text-sm placeholder-stone-500 focus:outline-none hover:bg-stone-300/70 dark:hover:bg-stone-900/50 focus:bg-stone-300/70 dark:focus:bg-stone-900/50 focus:border-indigo-500 transition"
             onChange={(e) => {
               setSearch(e.currentTarget.value);
             }}
