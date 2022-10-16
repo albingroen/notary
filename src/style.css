@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    @apply antialiased;
+    @apply antialiased text-black dark:text-white;
   }
 }
 
@@ -18,13 +18,21 @@
   outline: 0 !important;
 }
 
+.ͼ1f {
+  background: none;
+}
+
+.ͼ1m {
+  color: white;
+}
+
 #browse-notes::-webkit-scrollbar {
   display: none;
 }
 
 @layer components {
   [cmdk-item][aria-selected="true"] {
-    @apply bg-stone-700;
+    @apply bg-stone-700 dark:bg-stone-800;
   }
 
   [cmdk-item][aria-selected="true"] span {

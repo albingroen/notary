@@ -23,8 +23,10 @@ export default function IconButton({
       className={classNames(
         "rounded-md py-2 px-3.5 transition group",
         {
-          default: "bg-indigo-50 hover:bg-indigo-100",
-          danger: "bg-red-100 hover:bg-red-200",
+          default:
+            "bg-indigo-50 dark:bg-indigo-200/10 hover:bg-indigo-100 dark:hover:bg-indigo-500/50",
+          danger:
+            "bg-red-100 dark:bg-red-200/10 hover:bg-red-200 dark:hover:bg-red-500/50",
         }[variant],
         className
       )}
@@ -33,8 +35,10 @@ export default function IconButton({
         className={classNames(
           "w-4 transition",
           {
-            default: "text-indigo-500 group-hover:text-indigo-700",
-            danger: "text-red-500 group-hover:text-red-700",
+            default:
+              "text-indigo-500 dark:text-indigo-100 group-hover:text-indigo-700 dark:group-hover:text-white",
+            danger:
+              "text-red-500 dark:text-red-500 group-hover:text-red-700 dark:group-hover:text-white",
           }[variant]
         )}
       />

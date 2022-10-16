@@ -59,10 +59,10 @@ export default function Sidebar() {
   }, []);
 
   return (
-    <aside className="bg-stone-100 w-[250px] flex flex-col border-r border-stone-200">
+    <aside className="bg-stone-100 dark:bg-stone-700/10 w-[250px] flex flex-col border-stone-200 dark:border-stone-700">
       <div
         data-tauri-drag-region
-        className="flex items-center gap-2 pt-5 px-5 w-full"
+        className="flex items-center gap-2 px-5 h-12 w-full border-b dark:border-b-0 dark:bg-stone-700 border-r border-stone-200 dark:border-stone-600"
       >
         <button
           className="bg-[#FF5F57] h-3 w-3 rounded-full cursor-default"
@@ -92,14 +92,16 @@ export default function Sidebar() {
         />
       </div>
 
-      <div className="px-5 mt-5">
-        <h5 className="text-sm font-medium text-stone-400">Documents</h5>
+      <div className="p-5 border-r border-stone-200 dark:border-stone-700">
+        <h5 className="text-sm font-medium text-stone-400 dark:text-stone-500">
+          Documents
+        </h5>
 
         <div className="relative">
           <MagnifyingGlassIcon className="w-3.5 absolute left-2 top-1/2 transform -translate-y-[1.5px] text-stone-500" />
 
           <input
-            className="py-1.5 pr-2 pl-[27px] w-full border border-transparent rounded-md bg-stone-200 mt-3 text-sm placeholder-stone-500 focus:outline-none hover:bg-stone-200 focus:bg-stone-200 focus:border-stone-500 transition"
+            className="py-1.5 pr-2 pl-[27px] w-full border border-transparent rounded-md bg-stone-200 dark:bg-stone-700/30 dark:border dark:border-stone-700 mt-3 text-sm placeholder-stone-500 focus:outline-none hover:bg-stone-200 dark:hover:bg-stone-800 focus:bg-stone-200 dark:focus:bg-stone-800 focus:border-stone-500 dark:focus:border-stone-600 transition"
             onChange={(e) => {
               setSearch(e.currentTarget.value);
             }}
@@ -113,7 +115,7 @@ export default function Sidebar() {
       {search && notes ? (
         <SearchNotes search={search} notes={notes} />
       ) : (
-        <ul className="flex flex-col mt-4 px-5 flex-1 overflow-y-auto">
+        <ul className="flex flex-col px-5 pb-5 flex-1 overflow-y-auto border-r border-stone-200 dark:border-stone-700">
           {notes
             ?.sort((a, b) => {
               if (a.metadata?.createdAt > b.metadata?.createdAt) {
@@ -133,8 +135,8 @@ export default function Sidebar() {
                     className={classNames(
                       "flex py-[5px] transition",
                       isActive
-                        ? "text-black"
-                        : "text-stone-500 hover:text-black"
+                        ? "text-black dark:text-white"
+                        : "text-stone-500 hover:text-black dark:hover:text-white"
                     )}
                   >
                     <h5 className="w-full truncate">
@@ -147,10 +149,10 @@ export default function Sidebar() {
         </ul>
       )}
 
-      <div className="p-5 w-full">
+      <div className="p-5 w-full border-r border-stone-200 dark:border-stone-700">
         <button
           onClick={handleCreateNote}
-          className="flex justify-between items-center p-2.5 bg-stone-700 text-white hover:bg-stone-600 font-medium rounded-lg w-full transition text-sm"
+          className="flex justify-between items-center p-2.5 bg-stone-700 dark:bg-stone-600 text-white hover:bg-stone-600 dark:hover:bg-stone-500 font-medium rounded-lg w-full transition text-sm"
         >
           <span />
           <span>New document</span>

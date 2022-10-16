@@ -35,20 +35,18 @@ export default function NoteMetadata({ noteName }: NoteMetadataProps) {
 
         const globalNote = notes?.find((note) => note.name === noteName);
 
-        return globalNote
-          ? {
-              ...globalNote.metadata,
-              path: "",
-            }
-          : {};
+        return {
+          ...(globalNote?.metadata ?? {}),
+          path: "",
+        };
       },
     }
   );
 
   return (
-    <aside className="w-[400px] bg-white border-l border-stone-200 p-3.5">
+    <aside className="w-[400px] bg-white dark:bg-stone-800 border-l border-stone-200 dark:border-stone-700 p-3.5">
       {data ? (
-        <ul className="flex flex-col rounded-md overflow-hidden border border-stone-200">
+        <ul className="flex flex-col rounded-md overflow-hidden border border-stone-200 dark:border-stone-700">
           <MetadataItem
             value={data.createdAt ? data.createdAt.toString() : "Unknown"}
             label="Created"
@@ -93,14 +91,16 @@ function MetadataItem({
     <li
       className={classNames(
         "px-4 flex items-center justify-between gap-8 text-sm",
-        isEven ? "bg-white" : "bg-stone-100"
+        isEven
+          ? "bg-white dark:bg-stone-800"
+          : "bg-stone-100 dark:bg-stone-700/50"
       )}
     >
-      <h5 className="text-stone-500 w-20">{label}</h5>{" "}
+      <h5 className="text-stone-500 dark:text-stone-400 w-20">{label}</h5>{" "}
       <button
         type="button"
         title="Copy to clipboard"
-        className="flex-1 text-right truncate cursor-copy hover:text-indigo-600 transition py-3.5 active:text-indigo-900 focus:text-indigo-900 focus:outline-none"
+        className="flex-1 text-right truncate cursor-copy hover:text-indigo-600 dark:hover:text-indigo-300 transition py-3.5 focus:outline-none"
         onClick={() => {
           clipboard.writeText(value);
         }}

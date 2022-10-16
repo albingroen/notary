@@ -38,7 +38,7 @@ export default function CommandPalette() {
       <Command.Dialog
         open={isOpen}
         onOpenChange={setIsOpen}
-        className="fixed top-1/2 left-1/2 w-full transform -translate-y-1/2 -translate-x-1/2 max-w-lg border rounded-lg bg-black shadow-2xl shadow-stone-300 overflow-hidden h-[350px] flex flex-col"
+        className="fixed top-1/2 left-1/2 w-full transform -translate-y-1/2 -translate-x-1/2 max-w-lg rounded-lg bg-black shadow-2xl shadow-stone-300 dark:shadow-stone-900 overflow-hidden h-[350px] flex flex-col"
       >
         <Command.Input
           placeholder="Open a document"

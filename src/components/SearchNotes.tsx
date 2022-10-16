@@ -40,7 +40,7 @@ export default function SearchNotes({ notes, search }: SearchNotesProps) {
   );
 
   return (
-    <ul className="flex flex-col mt-5 px-5 flex-1 overflow-y-auto gap-5">
+    <ul className="flex flex-col px-5 flex-1 overflow-y-auto gap-5 border-r border-stone-200 dark:border-stone-700">
       {filteredNotes.map((fullNote) => (
         <Link
           to={`notes/${fullNote.name}`}
@@ -48,9 +48,9 @@ export default function SearchNotes({ notes, search }: SearchNotesProps) {
         >
           <h5 className="w-full truncate">{fullNote.name?.split(".md")[0]}</h5>
 
-          <div className="rounded-md bg-white shadow shadow-stone-200 flex flex-col divide-y divide-stone-200">
+          <div className="rounded-md bg-white dark:bg-stone-700/50 shadow shadow-stone-200 dark:shadow-stone-800 flex flex-col divide-y divide-stone-200">
             <div className="p-3 w-full">
-              <p className="text-sm group-hover:text-black group-focus:text-black transition text-stone-500 leading-relaxed whitespace-pre-wrap break-all">
+              <p className="text-sm group-hover:text-black dark:group-hover:text-white group-focus:text-black dark:group-focus:text-white transition text-stone-500 dark:text-stone-400 leading-relaxed whitespace-pre-wrap break-all">
                 {fullNote.content.substr(0, 200)}
               </p>
             </div>

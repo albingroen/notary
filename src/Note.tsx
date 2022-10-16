@@ -13,7 +13,7 @@ import {
   ClipboardDocumentIcon,
 } from "@heroicons/react/24/solid";
 import { clipboard, dialog, fs, path, shell } from "@tauri-apps/api";
-import { githubLight } from "@uiw/codemirror-theme-github";
+import { githubDark, githubLight } from "@uiw/codemirror-theme-github";
 import { markdown } from "@codemirror/lang-markdown";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -36,13 +36,17 @@ export default function Note() {
   // Server state
   const queryClient = useQueryClient();
 
-  const {
-    data: noteContent,
-    refetch: refetchNoteContent,
-    isLoading: isNoteContentLoading,
-  } = useQuery([noteName], () => getNote(noteName!), {
-    enabled: Boolean(noteName),
-  });
+  const { data: noteContent, isLoading: isNoteContentLoading } = useQuery(
+    [noteName],
+    () => getNote(noteName!),
+    {
+      enabled: Boolean(noteName),
+    }
+  );
+
+  const { data: theme, refetch: refetchTheme } = useQuery(["theme"], () =>
+    window.matchMedia("(prefers-color-scheme:dark)").matches ? "dark" : "light"
+  );
 
   // Local state
   const [isShowingMetadata, setIsShowingMetadata] = useState<boolean>(false);
@@ -65,6 +69,22 @@ export default function Note() {
       editor.current.view.focus();
     }
   }, [noteContent, noteName]);
+
+  useEffect(() => {
+    function handleChangeTheme() {
+      refetchTheme();
+    }
+
+    window
+      .matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", handleChangeTheme);
+
+    return () => {
+      window
+        .matchMedia("(prefers-color-scheme: dark)")
+        .removeEventListener("change", handleChangeTheme);
+    };
+  }, []);
 
   // Handler
   async function handleSaveNote() {
@@ -139,15 +159,15 @@ export default function Note() {
         />
       )}
 
-      <div className="border-b border-stone-200 flex items-center">
+      <div className="px-2.5 h-12 border-b dark:border-none border-stone-200 dark:border-stone-700 flex items-center bg-white dark:bg-stone-700">
         <div className="flex justify-betwen w-full">
-          <div className="p-3 flex items-center gap-1">
+          <div className="flex items-center gap-1">
             <h2
               contentEditable
               dangerouslySetInnerHTML={{
                 __html: noteName?.split(".md")[0] ?? "",
               }}
-              className="focus:outline-none pl-1.5 pr-2 py-2 hover:bg-stone-100 border border-transparent focus:border-indigo-400 rounded-md -my-1 transition leading-none"
+              className="focus:outline-none pl-1.5 pr-2 py-2 hover:bg-stone-100 dark:hover:bg-stone-600 border border-transparent focus:border-indigo-400 dark:focus:border-indigo-200 rounded -my-1 transition leading-none"
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   e.preventDefault();
@@ -164,7 +184,7 @@ export default function Note() {
             <div
               aria-label="Note changed"
               className={classNames(
-                "h-1.5 w-1.5 bg-indigo-500 rounded-full transition transform origin-center",
+                "h-1.5 w-1.5 bg-indigo-500 dark:bg-indigo-300 rounded-full transition transform origin-center",
                 isUpdated && !isNoteContentLoading ? "scale-100" : "scale-0"
               )}
             />
@@ -173,7 +193,7 @@ export default function Note() {
           <div data-tauri-drag-region className="flex-1" />
         </div>
 
-        <div className="flex items-center gap-2 p-3">
+        <div className="flex items-center gap-1.5">
           <IconButton
             icon={FolderIcon}
             title="Show document in finder"
@@ -209,7 +229,7 @@ export default function Note() {
         </div>
       </div>
 
-      <div className="h-full flex" style={{ height: "calc(100% - 55px)" }}>
+      <div className="h-full flex" style={{ height: "calc(100% - 50px)" }}>
         <div className="h-full w-full relative flex-1 overflow-hidden">
           <CodeMirror
             autoFocus
@@ -226,8 +246,8 @@ export default function Note() {
             }}
             height="100%"
             extensions={[vim(), markdown()]}
-            className="text-lg h-full w-full"
-            theme={githubLight}
+            className="text-lg h-full w-full bg-stone-800"
+            theme={theme === "light" ? githubLight : githubDark}
             basicSetup={{
               highlightSelectionMatches: false,
               highlightSpecialChars: false,
@@ -244,7 +264,7 @@ export default function Note() {
                 setIsPreviewing(true);
               }}
               className={classNames(
-                "absolute bottom-5 right-5 shadow-lg shadow-stone-200/80 bg-white border border-stone-200 origin-bottom-right transform transition h-64 w-56 rounded-lg overflow-hidden group duration-300",
+                "absolute bottom-5 right-5 shadow-lg shadow-stone-200/80 dark:shadow-stone-900/50 bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-700 origin-bottom-right transform transition h-64 w-56 rounded-lg overflow-hidden group duration-300",
                 isPreviewing
                   ? "scale-50 opacity-0 -rotate-3"
                   : "scale-100 opacity-100 rotate-0 hover:scale-110"
@@ -252,7 +272,7 @@ export default function Note() {
             >
               <div className="h-full w-full relative">
                 <div className="p-4 !pr-0">
-                  <Markdown className="w-full text-left prose prose-headings:font-medium prose-sm prose-indigo transform scale-[65%] origin-top-left overflow-y-auto">
+                  <Markdown className="w-full text-left prose prose-stone dark:prose-invert prose-headings:font-medium prose-sm prose-indigo transform scale-[65%] origin-top-left overflow-y-auto">
                     {value}
                   </Markdown>
                 </div>
