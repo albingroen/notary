@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    @apply antialiased text-black dark:text-white;
+    @apply antialiased text-black dark:text-white bg-white dark:bg-stone-800 overflow-hidden border-t border-stone-200 dark:border-stone-700;
   }
 }
 
@@ -44,6 +44,6 @@
   }
 
   .prose pre {
-    @apply bg-stone-100 text-black;
+    @apply bg-stone-100 dark:bg-stone-900 text-black dark:text-white;
   }
 }

@@ -159,7 +159,7 @@ export default function Note() {
         />
       )}
 
-      <div className="px-2.5 h-12 border-b dark:border-none border-stone-200 dark:border-stone-700 flex items-center bg-white dark:bg-stone-700">
+      <div className="px-2 h-12 border-b border-stone-200 dark:border-stone-700 flex items-center dark:bg-stone-700/10">
         <div className="flex justify-betwen w-full">
           <div className="flex items-center gap-1">
             <h2
@@ -167,7 +167,7 @@ export default function Note() {
               dangerouslySetInnerHTML={{
                 __html: noteName?.split(".md")[0] ?? "",
               }}
-              className="text-stone-500 dark:text-stone-400 focus:outline-none pl-1.5 pr-2 py-2 hover:text-black dark:hover:text-white focus:text-black dark:focus:text-white hover:bg-stone-100 dark:hover:bg-stone-600 border border-transparent focus:border-indigo-400 dark:focus:border-indigo-200 rounded -my-1 transition leading-none"
+              className="text-stone-500 dark:text-stone-400 focus:outline-none pl-1.5 pr-2 py-2 hover:text-black dark:hover:text-white focus:text-black dark:focus:text-white hover:bg-stone-100 dark:hover:bg-stone-900/50 border border-transparent focus:border-indigo-400 dark:focus:border-indigo-500 rounded -my-1 transition leading-none"
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   e.preventDefault();
@@ -189,8 +189,6 @@ export default function Note() {
               )}
             />
           </div>
-
-          <div data-tauri-drag-region className="flex-1" />
         </div>
 
         <div className="flex items-center gap-1.5">
@@ -264,7 +262,7 @@ export default function Note() {
                 setIsPreviewing(true);
               }}
               className={classNames(
-                "absolute bottom-3 right-1.5 shadow-lg shadow-stone-200/80 dark:shadow-stone-900/50 bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-700 origin-bottom-right transform transition h-64 w-56 rounded-lg overflow-hidden group duration-300",
+                "absolute bottom-4 right-4 shadow-lg shadow-stone-200/80 dark:shadow-stone-900/50 bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-700 origin-bottom-right transform transition h-64 w-56 rounded-lg overflow-hidden group duration-300",
                 isPreviewing
                   ? "scale-50 opacity-0 -rotate-3"
                   : "scale-100 opacity-100 rotate-0 hover:scale-110"
@@ -272,7 +270,7 @@ export default function Note() {
             >
               <div className="h-full w-full relative">
                 <div className="p-4 !pr-0">
-                  <Markdown className="w-full text-left prose prose-stone dark:prose-invert prose-headings:font-medium prose-sm prose-indigo transform scale-[65%] origin-top-left overflow-y-auto">
+                  <Markdown className="w-full text-left prose prose-stone dark:prose-invert prose-headings:font-medium prose-sm prose-a:no-underline prose-a:text-indigo-500 dark:prose-a:text-indigo-400 transform scale-[65%] origin-top-left overflow-y-auto">
                     {value}
                   </Markdown>
                 </div>

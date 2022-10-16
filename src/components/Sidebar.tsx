@@ -60,38 +60,6 @@ export default function Sidebar() {
 
   return (
     <aside className="bg-stone-100 dark:bg-stone-700/10 w-[250px] flex flex-col border-stone-200 dark:border-stone-700">
-      <div
-        data-tauri-drag-region
-        className="flex items-center gap-2 px-5 h-12 w-full border-b dark:border-b-0 dark:bg-stone-700 border-r border-stone-200 dark:border-stone-600"
-      >
-        <button
-          className="bg-[#FF5F57] h-3 w-3 rounded-full cursor-default"
-          tabIndex={-1}
-          onClick={() => {
-            appWindow.close();
-          }}
-          aria-label="Close window"
-        />
-
-        <button
-          className="bg-[#FFBC2E] h-3 w-3 rounded-full cursor-default"
-          tabIndex={-1}
-          onClick={() => {
-            appWindow.minimize();
-          }}
-          aria-label="Minimize window"
-        />
-
-        <button
-          className="bg-[#29CC42] h-3 w-3 rounded-full cursor-default"
-          tabIndex={-1}
-          onClick={() => {
-            appWindow.maximize();
-          }}
-          aria-label="Maximize window"
-        />
-      </div>
-
       <div className="p-5 border-r border-stone-200 dark:border-stone-700">
         <h5 className="text-sm font-medium text-stone-400 dark:text-stone-500">
           Documents
@@ -107,7 +75,6 @@ export default function Sidebar() {
             }}
             placeholder="Search"
             value={search}
-            type="search"
           />
         </div>
       </div>

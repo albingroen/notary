@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 
 function App() {
   return (
-    <div className="h-screen w-screen flex overflow-hidden rounded-xl dark:border-t border-stone-600 bg-white dark:bg-stone-800">
+    <div className="h-screen w-screen flex">
       <Sidebar />
 
       <CommandPalette />

@@ -44,7 +44,7 @@ export default function NoteMetadata({ noteName }: NoteMetadataProps) {
   );
 
   return (
-    <aside className="w-[400px] bg-white dark:bg-stone-800 p-3">
+    <aside className="w-[400px] bg-white dark:bg-stone-800 py-3 pr-3">
       {data ? (
         <ul className="flex flex-col rounded-md overflow-hidden border border-stone-200 dark:border-stone-700 h-full">
           <MetadataItem
@@ -90,7 +90,7 @@ function MetadataItem({
   return (
     <li
       className={classNames(
-        "px-4 flex items-center justify-between gap-8 text-sm font-mono tracking-tight",
+        "px-4 flex items-center justify-between gap-8 text-sm",
         isEven
           ? "bg-white dark:bg-stone-700/20"
           : "bg-stone-100 dark:bg-stone-700/50"

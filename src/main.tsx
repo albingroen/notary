@@ -1,7 +1,6 @@
 import "./style.css";
 import App from "./App";
 import Note from "./Note";
-import React from "react";
 import ReactDOM from "react-dom/client";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { createMemoryRouter, RouterProvider } from "react-router-dom";
