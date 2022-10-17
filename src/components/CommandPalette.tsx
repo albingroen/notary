@@ -1,11 +1,13 @@
 import { ArrowRightIcon } from "@heroicons/react/20/solid";
 import { Command } from "cmdk";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useCallback, useEffect, useState } from "react";
 import { Transition } from "@headlessui/react";
 import { getNotes } from "../lib/notes";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "react-query";
 import { register } from "@tauri-apps/api/globalShortcut";
+import { TauriEvent } from "@tauri-apps/api/event";
+import { appWindow } from "@tauri-apps/api/window";
 
 export default function CommandPalette() {
   // Router state
@@ -17,11 +19,20 @@ export default function CommandPalette() {
   // Local state
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  // Side-effects
-  useEffect(() => {
+  // Handlers
+  const handleRegisterCommands = useCallback(() => {
     register("Command+P", () => {
       setIsOpen(($) => !$);
     }).catch(() => {});
+  }, []);
+
+  // Side-effects
+  useEffect(() => {
+    handleRegisterCommands();
+
+    appWindow.listen(TauriEvent.WINDOW_FOCUS, () => {
+      handleRegisterCommands();
+    });
   }, []);
 
   return (

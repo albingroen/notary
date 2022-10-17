@@ -15,13 +15,15 @@ import {
 import { clipboard, dialog, fs, path, shell } from "@tauri-apps/api";
 import { githubDark, githubLight } from "@uiw/codemirror-theme-github";
 import { markdown } from "@codemirror/lang-markdown";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useQuery, useQueryClient } from "react-query";
 import { vim } from "@replit/codemirror-vim";
 import NotePreview from "./components/NotePreview";
 import NoteMetadata from "./components/NoteMetadata";
 import { register } from "@tauri-apps/api/globalShortcut";
+import { TauriEvent } from "@tauri-apps/api/event";
+import { appWindow } from "@tauri-apps/api/window";
 
 async function getNote(noteName: string) {
   return fs.readTextFile(`notes/${noteName}`, {
@@ -88,6 +90,15 @@ export default function Note() {
   }, []);
 
   useEffect(() => {
+    handleRegisterCommands();
+
+    appWindow.listen(TauriEvent.WINDOW_FOCUS, () => {
+      handleRegisterCommands();
+    });
+  }, []);
+
+  // Handler
+  const handleRegisterCommands = useCallback(() => {
     register("Command+Y", () => {
       setIsPreviewing(($) => !$);
     });
@@ -101,7 +112,6 @@ export default function Note() {
     });
   }, []);
 
-  // Handler
   async function handleSaveNote() {
     await fs.writeFile(`notes/${noteName}`, value, {
       dir: fs.BaseDirectory.Home,

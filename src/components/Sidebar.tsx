@@ -7,6 +7,8 @@ import { getNotes } from "../lib/notes";
 import { register, unregisterAll } from "@tauri-apps/api/globalShortcut";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useQuery, useQueryClient } from "react-query";
+import { appWindow } from "@tauri-apps/api/window";
+import { TauriEvent } from "@tauri-apps/api/event";
 
 function handleNotesFolder() {
   fs.readDir("notes", { dir: fs.BaseDirectory.Home }).catch(() => {
@@ -48,10 +50,7 @@ export default function Sidebar() {
     searchRef.current?.focus();
   }, [searchRef]);
 
-  // Side-effects
-  useEffect(() => {
-    handleNotesFolder();
-
+  const handleRegisterCommands = useCallback(() => {
     register("Command+N", () => {
       handleCreateNote();
     }).catch(() => {});
@@ -59,6 +58,21 @@ export default function Sidebar() {
     register("Command+Shift+F", () => {
       handleSearch();
     }).catch(() => {});
+  }, []);
+
+  // Side-effects
+  useEffect(() => {
+    handleNotesFolder();
+
+    handleRegisterCommands();
+
+    appWindow.listen(TauriEvent.WINDOW_FOCUS, () => {
+      handleRegisterCommands();
+    });
+
+    appWindow.listen(TauriEvent.WINDOW_BLUR, () => {
+      unregisterAll();
+    });
 
     return () => {
       unregisterAll();
@@ -79,6 +93,15 @@ export default function Sidebar() {
             className="py-1.5 pr-2 pl-[27px] w-full border border-transparent rounded-md bg-stone-200 dark:bg-transparent dark:border dark:border-stone-700 mt-3 text-sm placeholder-stone-500 focus:outline-none hover:bg-stone-300/70 dark:hover:bg-stone-900/50 focus:bg-stone-300/70 dark:focus:bg-stone-900/50 focus:border-indigo-500 transition"
             onChange={(e) => {
               setSearch(e.currentTarget.value);
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Escape") {
+                if (search) {
+                  setSearch("");
+                } else {
+                  e.currentTarget.blur();
+                }
+              }
             }}
             placeholder="Search"
             ref={searchRef}
