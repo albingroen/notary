@@ -21,7 +21,7 @@ export default function IconButton({
     <button
       {...rest}
       className={classNames(
-        "rounded py-2 px-3.5 transition group",
+        "rounded-md py-2 px-3.5 transition group",
         {
           default:
             "bg-indigo-50 dark:bg-indigo-200/10 hover:bg-indigo-100 dark:hover:bg-indigo-500/50",

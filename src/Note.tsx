@@ -21,6 +21,7 @@ import { useQuery, useQueryClient } from "react-query";
 import { vim } from "@replit/codemirror-vim";
 import NotePreview from "./components/NotePreview";
 import NoteMetadata from "./components/NoteMetadata";
+import { register } from "@tauri-apps/api/globalShortcut";
 
 async function getNote(noteName: string) {
   return fs.readTextFile(`notes/${noteName}`, {
@@ -84,6 +85,20 @@ export default function Note() {
         .matchMedia("(prefers-color-scheme: dark)")
         .removeEventListener("change", handleChangeTheme);
     };
+  }, []);
+
+  useEffect(() => {
+    register("Command+Y", () => {
+      setIsPreviewing(($) => !$);
+    });
+
+    register("Command+I", () => {
+      setIsShowingMetadata(($) => !$);
+    });
+
+    register("Command+Backspace", () => {
+      handleDeleteNote();
+    });
   }, []);
 
   // Handler
