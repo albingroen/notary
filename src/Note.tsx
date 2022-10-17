@@ -110,6 +110,10 @@ export default function Note() {
     register("Command+Shift+Backspace", () => {
       handleDeleteNote();
     });
+
+    register("Command+W", () => {
+      navigate("/");
+    });
   }, []);
 
   async function handleSaveNote() {

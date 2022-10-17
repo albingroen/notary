@@ -96,6 +96,9 @@ export default function Sidebar() {
             }}
             onKeyDown={(e) => {
               if (e.key === "Escape") {
+                e.preventDefault();
+                e.stopPropagation();
+
                 if (search) {
                   setSearch("");
                 } else {
