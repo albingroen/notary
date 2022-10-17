@@ -107,7 +107,7 @@ export default function Note() {
       setIsShowingMetadata(($) => !$);
     });
 
-    register("Command+Backspace", () => {
+    register("Command+Shift+Backspace", () => {
       handleDeleteNote();
     });
   }, []);

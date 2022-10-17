@@ -40,7 +40,7 @@ export default function NotePreview({
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <Dialog.Overlay className="fixed inset-0 bg-stone-500/40 dark:bg-stone-900/90" />
+          <Dialog.Overlay className="fixed inset-0 bg-stone-500/40 backdrop-blur dark:bg-stone-900/90" />
         </Transition.Child>
 
         <Transition.Child
