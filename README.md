@@ -1,7 +1,5 @@
-# Tauri + React + Typescript
+# Notary
 
-This template should help get you started developing with Tauri, React and Typescript in Vite.
+Notary is a fast, desktop-first and Vim-friendly markdown editor
 
-## Recommended IDE Setup
-
-- [VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+![bw](https://user-images.githubusercontent.com/19674362/196107621-9e1ce497-299a-4f60-b084-3e754338f2dc.png)
