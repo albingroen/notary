@@ -3,8 +3,12 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    @apply bg-white dark:bg-stone-800;
+  }
+
   body {
-    @apply antialiased text-black dark:text-white bg-white dark:bg-stone-800 overflow-hidden border-t border-stone-200 dark:border-stone-700;
+    @apply antialiased text-black dark:text-white overflow-hidden border-t border-stone-200 dark:border-stone-700;
   }
 }
 
