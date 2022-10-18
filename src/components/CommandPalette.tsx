@@ -67,9 +67,7 @@ export default function CommandPalette() {
                 }}
                 key={note.name}
               >
-                <span className="text-white opacity-50">
-                  {note.name?.split(".md")[0]}
-                </span>
+                <span className="text-white">{note.name?.split(".md")[0]}</span>
 
                 <ArrowRightIcon className="w-4 text-white note-arrow opacity-0" />
               </Command.Item>

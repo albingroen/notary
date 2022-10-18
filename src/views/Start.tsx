@@ -8,7 +8,7 @@ function Start() {
       <div className="h-screen w-screen flex">
         <Sidebar />
 
-        <main style={{ width: "calc(100% - 250px)" }} className="flex flex-col">
+        <main className="flex flex-col">
           <Outlet />
         </main>
       </div>

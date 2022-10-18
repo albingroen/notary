@@ -1,25 +1,12 @@
-import { clipboard, path } from "@tauri-apps/api";
-import { useQuery, useQueryClient } from "react-query";
-import { metadata } from "tauri-plugin-fs-extra-api";
 import classNames from "../lib/classNames";
-import { formatBytes } from "../lib/utils";
 import { Note } from "../types";
+import { clipboard } from "@tauri-apps/api";
+import { formatBytes } from "../lib/utils";
+import { getNoteMetadata } from "../lib/notes";
+import { useQuery, useQueryClient } from "react-query";
 
 interface NoteMetadataProps {
   noteName: string;
-}
-
-async function getNoteMetadata(noteName: string) {
-  const homeDir = await path.homeDir();
-
-  const notePath = `${homeDir}notes/${noteName}`;
-
-  const md = await metadata(notePath);
-
-  return {
-    ...md,
-    path: notePath,
-  };
 }
 
 export default function NoteMetadata({ noteName }: NoteMetadataProps) {

@@ -1,6 +1,6 @@
+import ReactMarkdown from "react-markdown";
 import { Dialog, Transition } from "@headlessui/react";
 import { useState, useEffect, Fragment } from "react";
-import ReactMarkdown from "react-markdown";
 
 interface NotePreviewProps {
   onClose: () => void;

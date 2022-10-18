@@ -2,19 +2,13 @@ import SearchNotes from "./SearchNotes";
 import classNames from "../lib/classNames";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
+import { TauriEvent } from "@tauri-apps/api/event";
+import { appWindow } from "@tauri-apps/api/window";
 import { fs } from "@tauri-apps/api";
-import { getNotes } from "../lib/notes";
+import { getNotes, handleNotesFolder } from "../lib/notes";
 import { register, unregisterAll } from "@tauri-apps/api/globalShortcut";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useQuery, useQueryClient } from "react-query";
-import { appWindow } from "@tauri-apps/api/window";
-import { TauriEvent } from "@tauri-apps/api/event";
-
-function handleNotesFolder() {
-  fs.readDir("notes", { dir: fs.BaseDirectory.Home }).catch(() => {
-    fs.createDir("notes", { dir: fs.BaseDirectory.Home }).catch(() => {});
-  });
-}
 
 export default function Sidebar() {
   // Router state

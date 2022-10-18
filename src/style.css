@@ -10,6 +10,10 @@
   body {
     @apply antialiased text-black dark:text-white overflow-hidden border-t border-stone-200 dark:border-stone-700;
   }
+
+  main {
+    width: calc(100% - 250px);
+  }
 }
 
 .cm-editor .cm-content {
@@ -37,14 +41,6 @@
 @layer components {
   [cmdk-item][aria-selected="true"] {
     @apply bg-stone-700 dark:bg-stone-800;
-  }
-
-  [cmdk-item][aria-selected="true"] span {
-    @apply opacity-100;
-  }
-
-  [cmdk-item][aria-selected="true"] .note-arrow {
-    @apply opacity-100;
   }
 
   .prose pre {
