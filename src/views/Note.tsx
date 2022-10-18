@@ -1,7 +1,7 @@
 import CodeMirror, { ReactCodeMirrorRef } from "@uiw/react-codemirror";
-import IconButton from "./components/IconButton";
+import IconButton from "../components/IconButton";
 import Markdown from "react-markdown";
-import classNames from "./lib/classNames";
+import classNames from "../lib/classNames";
 import {
   EyeIcon,
   TrashIcon,
@@ -19,8 +19,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useQuery, useQueryClient } from "react-query";
 import { vim } from "@replit/codemirror-vim";
-import NotePreview from "./components/NotePreview";
-import NoteMetadata from "./components/NoteMetadata";
+import NotePreview from "../components/NotePreview";
+import NoteMetadata from "../components/NoteMetadata";
 import { register } from "@tauri-apps/api/globalShortcut";
 import { TauriEvent } from "@tauri-apps/api/event";
 import { appWindow } from "@tauri-apps/api/window";

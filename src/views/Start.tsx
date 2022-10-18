@@ -1,8 +1,8 @@
-import CommandPalette from "./components/CommandPalette";
-import Sidebar from "./components/Sidebar";
+import CommandPalette from "../components/CommandPalette";
+import Sidebar from "../components/Sidebar";
 import { Outlet } from "react-router-dom";
 
-function App() {
+function Start() {
   return (
     <>
       <div className="h-screen w-screen flex">
@@ -18,4 +18,4 @@ function App() {
   );
 }
 
-export default App;
+export default Start;

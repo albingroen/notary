@@ -1,14 +1,14 @@
 import "./style.css";
-import App from "./App";
-import Note from "./Note";
+import Note from "./views/Note";
 import ReactDOM from "react-dom/client";
+import Start from "./views/Start";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { createMemoryRouter, RouterProvider } from "react-router-dom";
 
 const router = createMemoryRouter([
   {
     path: "/",
-    element: <App />,
+    element: <Start />,
     children: [
       {
         path: "notes/:noteName",
