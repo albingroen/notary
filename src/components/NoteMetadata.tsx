@@ -65,7 +65,7 @@ export default function NoteMetadata({ noteName }: NoteMetadataProps) {
           />
 
           <MetadataItem
-            value={data.blksize ? formatBytes(data.blksize) : "Uknown"}
+            value={data.size ? formatBytes(data.size) : "Uknown"}
             label="File size"
           />
         </ul>

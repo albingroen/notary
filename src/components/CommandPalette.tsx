@@ -1,13 +1,13 @@
 import { ArrowRightIcon } from "@heroicons/react/20/solid";
 import { Command } from "cmdk";
 import { Fragment, useCallback, useEffect, useState } from "react";
+import { TauriEvent } from "@tauri-apps/api/event";
 import { Transition } from "@headlessui/react";
+import { appWindow } from "@tauri-apps/api/window";
 import { getNotes } from "../lib/notes";
+import { register } from "@tauri-apps/api/globalShortcut";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "react-query";
-import { register } from "@tauri-apps/api/globalShortcut";
-import { TauriEvent } from "@tauri-apps/api/event";
-import { appWindow } from "@tauri-apps/api/window";
 
 export default function CommandPalette() {
   // Router state

@@ -4,15 +4,17 @@ import { Outlet } from "react-router-dom";
 
 function App() {
   return (
-    <div className="h-screen w-screen flex">
-      <Sidebar />
+    <>
+      <div className="h-screen w-screen flex">
+        <Sidebar />
+
+        <main style={{ width: "calc(100% - 250px)" }} className="flex flex-col">
+          <Outlet />
+        </main>
+      </div>
 
       <CommandPalette />
-
-      <main style={{ width: "calc(100% - 250px)" }} className="flex flex-col">
-        <Outlet />
-      </main>
-    </div>
+    </>
   );
 }
 

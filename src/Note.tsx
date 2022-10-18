@@ -273,7 +273,7 @@ export default function Note() {
             }}
             height="100%"
             extensions={[vim(), markdown()]}
-            className="text-lg h-full w-full bg-stone-800"
+            className="text-lg h-full w-full"
             theme={theme === "light" ? githubLight : githubDark}
             basicSetup={{
               highlightSelectionMatches: false,
@@ -293,7 +293,7 @@ export default function Note() {
               className={classNames(
                 "absolute bottom-4 right-4 shadow-lg shadow-stone-200/80 dark:shadow-stone-900/50 bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-700 origin-bottom-right transform transition h-64 w-56 rounded-lg overflow-hidden group duration-300",
                 isPreviewing
-                  ? "scale-50 opacity-0 -rotate-12"
+                  ? "scale-50 opacity-0 -rotate-3"
                   : "scale-100 opacity-100 rotate-0 hover:scale-110"
               )}
             >
