@@ -9,7 +9,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: [macos-latest, ubuntu-20.04, windows-latest]
+        platform: [macos-latest]
 
     runs-on: ${{ matrix.platform }}
     steps:
@@ -28,13 +28,13 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf
     - name: install app dependencies and build it
-      run: yarn && yarn build
+      run: npm && npm build
     - uses: tauri-apps/tauri-action@v0
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tagName: app-v__VERSION__ # the action automatically replaces \_\_VERSION\_\_ with the app version
-        releaseName: "App v__VERSION__"
+        tagName: notary-v__VERSION__
+        releaseName: "Notary v__VERSION__"
         releaseBody: "See the assets to download this version and install."
-        releaseDraft: true
+        releaseDraft: false
         prerelease: false
