@@ -1,0 +1,11 @@
+{
+  "version": "v0.0.2",
+  "notes": "Notary v0.0.2",
+  "pub_date": "2022-10-20T21:11:50.590Z",
+  "platforms": {
+    "darwin-aarch64": {
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVUdU56c21Ra1U0eU8ydXk3Z2lmL2RnME9yWE14b0h0UlJlRVlCajZIV3hwMGJtUlE4cHY4L2FFNmdKWkg0VXdHdC92U2N1cGRvM2tEcjhmUWlaeVpoR0xjU0M3QzlQNXdZPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNjY2Mjk4MzY5CWZpbGU6Tm90YXJ5LmFwcC50YXIuZ3oKbVpSOU45K3d2THJHVFptQjlsNnNQYVVEdi9mQ25UL3RZTGhCejJnODBWbldhMXhGRTlGSldvMSt3TlRDblNsa2xZNm5jVGtQbTMybVhhYmorbGtVQUE9PQo=",
+      "url": "https://github.com/albingroen/notary/releases/download/v0.0.3/Notary.app.tar.gz"
+    }
+  }
+}
