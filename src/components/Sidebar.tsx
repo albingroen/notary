@@ -1,7 +1,10 @@
 import SearchNotes from "./SearchNotes";
 import classNames from "../lib/classNames";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
+import {
+  MagnifyingGlassIcon,
+  PencilSquareIcon,
+} from "@heroicons/react/20/solid";
 import { TauriEvent } from "@tauri-apps/api/event";
 import { appWindow } from "@tauri-apps/api/window";
 import { fs } from "@tauri-apps/api";
@@ -151,7 +154,9 @@ export default function Sidebar() {
         >
           <span />
           <span>New document</span>
-          <span>&rarr;</span>
+          <span>
+            <PencilSquareIcon className="w-4" />
+          </span>
         </button>
       </div>
     </aside>

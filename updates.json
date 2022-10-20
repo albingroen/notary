@@ -1,10 +1,10 @@
 {
-  "version": "v0.0.2",
-  "notes": "Notary v0.0.2",
-  "pub_date": "2022-10-20T21:11:50.590Z",
+  "version": "v0.0.3",
+  "notes": "Notary v0.0.3",
+  "pub_date": "2022-10-20T21:22:23.249Z",
   "platforms": {
     "darwin-aarch64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVUdU56c21Ra1U0eU8ydXk3Z2lmL2RnME9yWE14b0h0UlJlRVlCajZIV3hwMGJtUlE4cHY4L2FFNmdKWkg0VXdHdC92U2N1cGRvM2tEcjhmUWlaeVpoR0xjU0M3QzlQNXdZPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNjY2Mjk4MzY5CWZpbGU6Tm90YXJ5LmFwcC50YXIuZ3oKbVpSOU45K3d2THJHVFptQjlsNnNQYVVEdi9mQ25UL3RZTGhCejJnODBWbldhMXhGRTlGSldvMSt3TlRDblNsa2xZNm5jVGtQbTMybVhhYmorbGtVQUE9PQo=",
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVUdU56c21Ra1U0eU54Z0thZkV2UHd2eXBlZ2k1dVVtSW5Fd0ZrTXJoUDVia0dJMTRuc0w1dlQwbjFJWGt2NDNtVzlrOUxjV05sOGpRanpNeEgxRkVVZ2svVmFzMXl4Z0E4PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNjY2MzAwNzU5CWZpbGU6Tm90YXJ5LmFwcC50YXIuZ3oKSlJtWHVmR3lBRWc2VjVabTVyYm9IN3BzbjY0elVkM2FZUG85U2trUUdBRitXVTlzanhhcEFFTUNPQzNYMWZ5aXhudGI0TWpoU29jaG5CeDV4dUZuQlE9PQo=",
       "url": "https://github.com/albingroen/notary/releases/download/v0.0.3/Notary.app.tar.gz"
     }
   }
