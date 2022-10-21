@@ -40,4 +40,4 @@ If you want to sync your documents, connect the `~/notes` folder with your sourc
 
 ## Contributing
 
-Notary is open for contributors! Please submit a issue beforehand to not what you want to add or fix with Notary. Then, simply fork the repository and create a pull request.
+Notary is open for contributors! Please submit a issue beforehand to note what you want to add or fix with Notary. Then, simply fork the repository and create a pull request describing your changes.
