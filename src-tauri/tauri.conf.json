@@ -11,15 +11,35 @@
   },
   "tauri": {
     "allowlist": {
-      "all": true,
       "fs": {
-        "scope": ["$HOME/notes", "$HOME/notes/**/*"]
+        "scope": ["$HOME/notes", "$HOME/notes/**/*"],
+        "readFile": true,
+        "writeFile": true,
+        "readDir": true,
+        "createDir": true,
+        "removeFile": true,
+        "renameFile": true
+      },
+      "path": {
+        "all": true
+      },
+      "globalShortcut": {
+        "all": true
+      },
+      "clipboard": {
+        "writeText": true
+      },
+      "dialog": {
+        "ask": true
+      },
+      "shell": {
+        "open": true
       }
     },
     "macOSPrivateApi": true,
     "bundle": {
       "active": true,
-      "category": "DeveloperTool",
+      "category": "Productivity",
       "copyright": "",
       "deb": {
         "depends": []

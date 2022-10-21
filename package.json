@@ -1,6 +1,5 @@
 {
   "name": "notary",
-  "private": true,
   "version": "0.0.3",
   "type": "module",
   "scripts": {
