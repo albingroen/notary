@@ -52,7 +52,7 @@ export default function NoteMetadata({ noteName }: NoteMetadataProps) {
           />
 
           <MetadataItem
-            value={data.size ? formatBytes(data.size) : "Uknown"}
+            value={data.size ? formatBytes(data.size) : "0 Bytes"}
             label="File size"
           />
         </ul>
