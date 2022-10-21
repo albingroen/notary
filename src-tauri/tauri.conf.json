@@ -7,7 +7,7 @@
   },
   "package": {
     "productName": "Notary",
-    "version": "0.0.3"
+    "version": "0.0.5"
   },
   "tauri": {
     "allowlist": {
