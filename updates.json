@@ -1,15 +1,15 @@
 {
-  "version": "v0.0.5",
-  "notes": "Notary v0.0.5",
-  "pub_date": "2022-10-21T06:57:04.638Z",
+  "version": "v0.0.6",
+  "notes": "Notary v0.0.6",
+  "pub_date": "2022-10-21T08:44:25.195Z",
   "platforms": {
     "darwin-aarch64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVUdU56c21Ra1U0eUtVOWRGWVN0b3NZRDhvSUlESE14R1F2TTIyS0h0YnhsMWEyaFlzZDJZVmRuTUhRS1ZpbjYzb3ZuK1FpL0kybGhsakQ0cWlrTGc1dmJOZkZ4YUZ0elE4PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNjY2MzM1MzE0CWZpbGU6Tm90YXJ5LmFwcC50YXIuZ3oKenppSU5vdzZtS1BRV3hNR1RRVUxJYVpmSHhzb3FTbzBmZHQzTjBXWjdCRnZvOHlVb0VOZU0wdkdseGdUVFRLOVorQzlsQ1VoQWNHc0o0Z25DRWc2QWc9PQo=",
-      "url": "https://github.com/albingroen/notary/releases/download/v0.0.5/Notary_aarch64.app.tar.gz"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVTb0xld0lEeFQvODIrTmQrdStWaGszdjl2aGp4VHhYZU9Dc2VINFVPTnlDMlQ5ZWltR0FCNTRPRm1XRU5EMVltRmQ2VDZuYm92VGgzK2htVFB2alZzNnlBa1VRS0w1RkFFPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNjY2MjUwNDM5CWZpbGU6Tm90YXJ5LmFwcC50YXIuZ3oKVVJFY3hDL2NhWkhDSE4yNzlrMDZWNHR2cDRKL3hlM3NjTXEyUzI3UEEveG9LM01Zb2V6MnZUVUlWK1M1NHJmaldSWXAvSHY1dE5acFFlem1KUUVYQ3c9PQo=",
+      "url": "https://github.com/albingroen/notary/releases/download/v0.0.6/Notary_aarch64.app.tar.gz"
     },
     "darwin-x86_64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVUdU56c21Ra1U0eUQ2SDBKY2dvVHhUNW5XY3BZbFJuMU9RbEtQSENFK2lHUEZ2d3p2d2VuTkdXYUtpcUxBQ1ZSVUhWSEhCeENnUmM3d0tGeVcwUS9VcGhVcUlnYS9CVHc4PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNjY2MzQwMDA0CWZpbGU6Tm90YXJ5LmFwcC50YXIuZ3oKZk9rZkNlRlVRajVVU2FBaTdpcC9CcWdiYzEzS1c3Y0xSai8yVC9MTjh0S0ttbXpabmRsN0p0bTNaanpTMUlRWVBabkczNVBGVjdxNTdmUk9FOEpuQmc9PQo=",
-      "url": "https://github.com/albingroen/notary/releases/download/v0.0.5/Notary_x86_64.app.tar.gz"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVUdU56c21Ra1U0eURtN1JlazhYajA0RHprcnNSSXp4OUJPUnZQNHlDbjJMNTZ5WG81YitTa2pGR3ZWQkVieWdDdFJ1NXhXZXE5T2ZxUXBPc0JZZVRHcXYyN05WSXloYUFnPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNjY2MzQyMTUxCWZpbGU6Tm90YXJ5LmFwcC50YXIuZ3oKYXM5OHJPN1hKZHkwaEZ0YUhEaEM3Z2hoL0hpdkNHQXpZdkNzQU1QSGE4Szh4bnJ4STA2K0w4MXVrdWxjYytsbmZUQkV4ODR1UHdsYmxxaEFibVJtQnc9PQo=",
+      "url": "https://github.com/albingroen/notary/releases/download/v0.0.6/Notary_x86_64.app.tar.gz"
     }
   }
 }
