@@ -81,7 +81,8 @@ export default function NoteToolbar({
 
   async function handleShowNoteInFinder() {
     const homeDir = await path.homeDir();
-    return shell.open(`${homeDir}/notes`);
+    console.log(`${homeDir}notes`)
+    return shell.open(`${homeDir}notes`);
   }
 
   return (

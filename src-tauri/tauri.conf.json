@@ -33,7 +33,7 @@
         "ask": true
       },
       "shell": {
-        "open": true
+        "open": "^(.+)\/([^\/]+)$"
       }
     },
     "macOSPrivateApi": true,
