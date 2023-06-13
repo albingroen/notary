@@ -6,7 +6,7 @@ import {
   FolderIcon,
   InformationCircleIcon,
   TrashIcon,
-} from "@heroicons/react/20/solid";
+} from "@heroicons/react/24/outline";
 import { NavigateFunction } from "react-router-dom";
 import { deleteNote, renameNote } from "../lib/notes";
 import { dialog, path, shell } from "@tauri-apps/api";
