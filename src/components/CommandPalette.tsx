@@ -60,7 +60,7 @@ export default function CommandPalette() {
           <Command.Group>
             {notes?.map((note) => (
               <Command.Item
-                className="py-2 px-2.5 rounded flex items-center justify-between cursor-pointer"
+                className="py-2 px-2.5 rounded flex items-center justify-between cursor-default select-none"
                 onSelect={() => {
                   navigate(`/notes/${note.name}`);
                   setIsOpen(false);
