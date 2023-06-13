@@ -81,12 +81,12 @@ export default function NoteToolbar({
 
   async function handleShowNoteInFinder() {
     const homeDir = await path.homeDir();
-    console.log(`${homeDir}notes`)
+    console.log(`${homeDir}notes`);
     return shell.open(`${homeDir}notes`);
   }
 
   return (
-    <div className="px-2 h-12 border-b border-stone-200 dark:border-stone-700 flex items-center dark:bg-stone-700/10">
+    <div className="px-2 h-12 border-b border-gray-200 dark:border-gray-700 flex items-center dark:bg-gray-700/10">
       <div className="flex justify-betwen w-full">
         <div className="flex items-center gap-1">
           <h2
@@ -94,7 +94,7 @@ export default function NoteToolbar({
             dangerouslySetInnerHTML={{
               __html: noteName?.split(".md")[0] ?? "",
             }}
-            className="text-stone-500 dark:text-stone-400 focus:outline-none pl-1.5 pr-2 py-2 hover:text-black dark:hover:text-white focus:text-black dark:focus:text-white hover:bg-stone-100 dark:hover:bg-stone-900/50 border border-transparent focus:border-indigo-400 dark:focus:border-indigo-500 rounded -my-1 transition leading-none"
+            className="text-gray-500 dark:text-gray-400 focus:outline-none pl-1.5 pr-2 py-2 hover:text-black dark:hover:text-white focus:text-black dark:focus:text-white hover:bg-gray-100 dark:hover:bg-gray-900/50 border border-transparent focus:border-indigo-400 dark:focus:border-indigo-500 rounded -my-1 transition leading-none"
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 e.preventDefault();
