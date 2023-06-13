@@ -2,8 +2,6 @@ import { fs } from "@tauri-apps/api";
 import { FileEntry } from "@tauri-apps/api/fs";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import classNames from "../lib/classNames";
-import { chunkString } from "../lib/utils";
 
 interface SearchNotesProps {
   search: string;
@@ -44,7 +42,7 @@ export default function SearchNotes({ notes, search }: SearchNotesProps) {
       {filteredNotes.map((fullNote) => (
         <Link
           to={`notes/${fullNote.name}`}
-          className="flex transition flex flex-col gap-2 group focus:outline-none"
+          className="flex transition flex flex-col gap-2 group focus:outline-none cursor-default select-none"
         >
           <h5 className="w-full truncate">{fullNote.name?.split(".md")[0]}</h5>
 

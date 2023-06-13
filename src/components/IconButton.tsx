@@ -21,10 +21,10 @@ export default function IconButton({
     <button
       {...rest}
       className={classNames(
-        "rounded-md py-2 px-3.5 transition group",
+        "rounded-md py-2 px-3.5 transition group cursor-default",
         {
           default:
-            "bg-indigo-50 dark:bg-indigo-200/10 hover:bg-indigo-100 dark:hover:bg-indigo-500/50",
+            "bg-gray-50 dark:bg-gray-200/10 hover:bg-gray-100 dark:hover:bg-gray-500/50",
           danger:
             "bg-red-100 dark:bg-red-200/10 hover:bg-red-200 dark:hover:bg-red-500/50",
         }[variant],
@@ -32,11 +32,12 @@ export default function IconButton({
       )}
     >
       <Icon
+        strokeWidth={2}
         className={classNames(
-          "w-4 transition",
+          "w-[18px] transition",
           {
             default:
-              "text-indigo-500 dark:text-indigo-300 group-hover:text-indigo-700 dark:group-hover:text-white",
+              "text-gray-500 dark:text-gray-300 group-hover:text-gray-700 dark:group-hover:text-white",
             danger:
               "text-red-500 dark:text-red-500 group-hover:text-red-700 dark:group-hover:text-white",
           }[variant]

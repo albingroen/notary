@@ -17,7 +17,7 @@ export default function NotePreviewWindow({
     <button
       onClick={onClick}
       className={classNames(
-        "absolute bottom-4 right-4 shadow-lg shadow-gray-200/80 dark:shadow-gray-900/50 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 origin-bottom-right transform transition h-64 w-56 rounded-lg overflow-hidden group duration-300",
+        "absolute bottom-4 right-4 shadow-lg shadow-gray-200/80 dark:shadow-gray-900/50 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 origin-bottom-right transform transition h-64 w-56 rounded-lg overflow-hidden group duration-300 cursor-default",
         isPreviewing
           ? "scale-50 opacity-0 -rotate-3"
           : "scale-100 opacity-100 rotate-0 hover:scale-110"
@@ -25,7 +25,7 @@ export default function NotePreviewWindow({
     >
       <div className="h-full w-full relative">
         <div className="p-4 !pr-0">
-          <ReactMarkdown className="w-full text-left prose prose-stone dark:prose-invert prose-headings:font-medium prose-sm prose-a:no-underline prose-a:text-indigo-500 dark:prose-a:text-indigo-400 transform scale-[65%] origin-top-left overflow-y-auto">
+          <ReactMarkdown className="w-full text-left prose prose-stone dark:prose-invert prose-headings:font-medium prose-sm prose-a:no-underline prose-a:text-indigo-500 dark:prose-a:text-indigo-400 transform scale-[65%] origin-top-left overflow-y-auto select-none">
             {value}
           </ReactMarkdown>
         </div>
