@@ -33,7 +33,7 @@
         "ask": true
       },
       "shell": {
-        "open": "^(.+)\/([^\/]+)$"
+        "open": "^(.+)/([^/]+)$"
       }
     },
     "macOSPrivateApi": true,
@@ -87,7 +87,9 @@
         "height": 1080,
         "resizable": true,
         "title": "Notary",
-        "width": 1920
+        "width": 1920,
+        "titleBarStyle": "Overlay",
+        "hiddenTitle": true
       }
     ]
   }

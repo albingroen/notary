@@ -78,7 +78,7 @@ export default function Sidebar() {
 
   return (
     <aside className="bg-stone-100 dark:bg-stone-700/10 w-[250px] flex flex-col border-stone-200 dark:border-stone-700">
-      <div className="p-5 border-r border-stone-200 dark:border-stone-700">
+      <div className="p-5 pt-10 border-r border-stone-200 dark:border-stone-700">
         <h5 className="text-sm font-medium text-stone-400 dark:text-stone-500">
           Documents
         </h5>
