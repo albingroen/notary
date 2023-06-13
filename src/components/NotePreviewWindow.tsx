@@ -17,7 +17,7 @@ export default function NotePreviewWindow({
     <button
       onClick={onClick}
       className={classNames(
-        "absolute bottom-4 right-4 shadow-lg shadow-stone-200/80 dark:shadow-stone-900/50 bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-700 origin-bottom-right transform transition h-64 w-56 rounded-lg overflow-hidden group duration-300",
+        "absolute bottom-4 right-4 shadow-lg shadow-gray-200/80 dark:shadow-gray-900/50 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 origin-bottom-right transform transition h-64 w-56 rounded-lg overflow-hidden group duration-300",
         isPreviewing
           ? "scale-50 opacity-0 -rotate-3"
           : "scale-100 opacity-100 rotate-0 hover:scale-110"
@@ -30,7 +30,7 @@ export default function NotePreviewWindow({
           </ReactMarkdown>
         </div>
 
-        <div className="absolute inset-0 bg-stone-700/60 group-active:bg-stone-700/80 backdrop-blur-sm flex flex-col gap-1 items-center justify-center opacity-0 group-hover:opacity-100 transition">
+        <div className="absolute inset-0 bg-gray-700/60 group-active:bg-gray-700/80 backdrop-blur-sm flex flex-col gap-1 items-center justify-center opacity-0 group-hover:opacity-100 transition">
           <EyeIcon className="w-5 text-white" />
           <p className="font-medium text-lg text-white">Preview</p>
         </div>

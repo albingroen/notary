@@ -31,9 +31,9 @@ export default function NoteMetadata({ noteName }: NoteMetadataProps) {
   );
 
   return (
-    <aside className="w-[400px] bg-white dark:bg-stone-800 py-3 pr-3">
+    <aside className="w-[400px] bg-white dark:bg-gray-800 py-3 pr-3">
       {data ? (
-        <ul className="flex flex-col rounded-md overflow-hidden border border-stone-200 dark:border-stone-700 h-full">
+        <ul className="flex flex-col rounded-md overflow-hidden border border-gray-200 dark:border-gray-700 h-full">
           <MetadataItem
             value={data.createdAt ? data.createdAt.toString() : "Unknown"}
             label="Created"
@@ -79,11 +79,11 @@ function MetadataItem({
       className={classNames(
         "px-4 flex items-center justify-between gap-8 text-sm",
         isEven
-          ? "bg-white dark:bg-stone-700/20"
-          : "bg-stone-100 dark:bg-stone-700/50"
+          ? "bg-white dark:bg-gray-700/20"
+          : "bg-gray-100 dark:bg-gray-700/50"
       )}
     >
-      <h5 className="text-stone-500 dark:text-stone-400 w-20">{label}</h5>{" "}
+      <h5 className="text-gray-500 dark:text-gray-400 w-20">{label}</h5>{" "}
       <button
         type="button"
         title="Copy to clipboard"

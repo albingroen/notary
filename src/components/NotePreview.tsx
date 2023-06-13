@@ -40,7 +40,7 @@ export default function NotePreview({
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <Dialog.Overlay className="fixed inset-0 bg-stone-500/40 backdrop-blur dark:bg-stone-900/90" />
+          <Dialog.Overlay className="fixed inset-0 bg-gray-500/40 backdrop-blur dark:bg-gray-900/90" />
         </Transition.Child>
 
         <Transition.Child
@@ -52,7 +52,7 @@ export default function NotePreview({
           leave="ease-in duration-200"
           as={Fragment}
         >
-          <Dialog.Panel className="bg-white dark:bg-stone-800 rounded-lg w-full max-w-screen-md min-h-full p-8 pt-10 shadow-2xl shadow-stone-400/70 dark:shadow-stone-900/70 mx-auto">
+          <Dialog.Panel className="bg-white dark:bg-gray-800 rounded-lg w-full max-w-screen-md min-h-full p-8 pt-10 shadow-2xl shadow-gray-400/70 dark:shadow-gray-900/70 mx-auto">
             <article className="prose max-w-none prose-stone prose-a:no-underline prose-a:text-indigo-500 dark:prose-a:text-indigo-400 dark:prose-invert prose-headings:font-medium">
               <ReactMarkdown>{noteContent}</ReactMarkdown>
             </article>
