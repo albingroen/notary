@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 @layer base {
-  html {
-    @apply dark:bg-neutral-900 dark:text-white;
-  }
+    html {
+        @apply dark:bg-neutral-900 dark:text-white;
+    }
 }

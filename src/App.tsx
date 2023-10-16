@@ -1,5 +1,9 @@
 function App() {
-  return <p>Notary</p>;
+    return (
+        <div>
+            <p>Notary</p>
+        </div>
+    )
 }
 
-export default App;
+export default App
