@@ -3,93 +3,45 @@
     "beforeDevCommand": "npm run dev",
     "beforeBuildCommand": "npm run build",
     "devPath": "http://localhost:1420",
-    "distDir": "../dist"
+    "distDir": "../dist",
+    "withGlobalTauri": false
   },
   "package": {
-    "productName": "Notary",
-    "version": "0.0.7"
+    "productName": "notary",
+    "version": "0.0.0"
   },
   "tauri": {
     "allowlist": {
-      "fs": {
-        "scope": ["$HOME/notes", "$HOME/notes/**/*"],
-        "readFile": true,
-        "writeFile": true,
-        "readDir": true,
-        "createDir": true,
-        "removeFile": true,
-        "renameFile": true
-      },
-      "path": {
-        "all": true
-      },
-      "globalShortcut": {
-        "all": true
-      },
-      "clipboard": {
-        "writeText": true
-      },
-      "dialog": {
-        "ask": true
-      },
+      "all": false,
       "shell": {
-        "open": "^(.+)/([^/]+)$"
+        "all": false,
+        "open": true
       }
     },
-    "macOSPrivateApi": true,
     "bundle": {
       "active": true,
-      "category": "Productivity",
-      "copyright": "",
-      "deb": {
-        "depends": []
-      },
-      "externalBin": [],
+      "targets": "all",
+      "identifier": "com.tauri.dev",
       "icon": [
         "icons/32x32.png",
         "icons/128x128.png",
         "icons/128x128@2x.png",
         "icons/icon.icns",
         "icons/icon.ico"
-      ],
-      "identifier": "com.notary.app",
-      "longDescription": "",
-      "macOS": {
-        "entitlements": null,
-        "exceptionDomain": "",
-        "frameworks": [],
-        "providerShortName": null,
-        "signingIdentity": null
-      },
-      "resources": [],
-      "shortDescription": "",
-      "targets": "all",
-      "windows": {
-        "certificateThumbprint": null,
-        "digestAlgorithm": "sha256",
-        "timestampUrl": ""
-      }
+      ]
     },
     "security": {
       "csp": null
     },
-    "updater": {
-      "active": true,
-      "endpoints": [
-        "https://raw.githubusercontent.com/albingroen/notary/main/updates.json"
-      ],
-      "dialog": true,
-      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEM4Mzg0NTQyMjYzQjM3RUUKUldUdU56c21Ra1U0eUFuSzlXQUYveUNaZ2FuYWlqWEhKOUMzTGh4ZkU4emJNNWMxc05XWFB2RVkK"
-    },
     "windows": [
       {
-        "fullscreen": false,
-        "height": 1080,
-        "resizable": true,
-        "title": "Notary",
-        "width": 1920,
         "titleBarStyle": "Overlay",
-        "hiddenTitle": true
+        "fullscreen": false,
+        "hiddenTitle": true,
+        "resizable": true,
+        "title": "notary",
+        "width": 800,
+        "height": 600
       }
     ]
   }
