@@ -6,4 +6,21 @@
     html {
         @apply dark:bg-neutral-900 dark:text-white;
     }
+
+    /* Make Notary more macOS like by disabling selection of text, and using the default cursor where suited. */
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    a,
+    span {
+        @apply select-none cursor-default;
+    }
+
+    button {
+        @apply cursor-default select-none;
+    }
 }
