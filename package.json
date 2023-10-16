@@ -1,40 +1,41 @@
 {
-  "name": "notary",
-  "private": true,
-  "version": "0.0.8",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview",
-    "tauri": "tauri",
-    "format": "prettier --write src",
-    "lint": "eslint src",
-    "prepare": "husky install"
-  },
-  "dependencies": {
-    "@tauri-apps/api": "^1.5.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "tauri-plugin-fs-extra-api": "github:tauri-apps/tauri-plugin-fs-extra#v1"
-  },
-  "devDependencies": {
-    "@tauri-apps/cli": "^1.5.0",
-    "@types/react": "^18.2.15",
-    "@types/react-dom": "^18.2.7",
-    "@typescript-eslint/eslint-plugin": "^6.8.0",
-    "@typescript-eslint/parser": "^6.8.0",
-    "@vitejs/plugin-react": "^4.0.3",
-    "autoprefixer": "^10.4.16",
-    "eslint": "^8.51.0",
-    "eslint-config-prettier": "^9.0.0",
-    "eslint-plugin-prettier": "^5.0.1",
-    "eslint-plugin-react": "^7.33.2",
-    "husky": "^8.0.3",
-    "postcss": "^8.4.31",
-    "prettier": "^3.0.3",
-    "tailwindcss": "^3.3.3",
-    "typescript": "^5.0.2",
-    "vite": "^4.4.4"
-  }
+    "name": "notary",
+    "description": "A fast, desktop-first & Vim-friendly Markdown editor",
+    "private": true,
+    "version": "0.0.8",
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "tsc && vite build",
+        "preview": "vite preview",
+        "tauri": "tauri",
+        "format": "prettier --write src",
+        "lint": "eslint src",
+        "prepare": "husky install"
+    },
+    "dependencies": {
+        "@tauri-apps/api": "^1.5.0",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "tauri-plugin-fs-extra-api": "github:tauri-apps/tauri-plugin-fs-extra#v1"
+    },
+    "devDependencies": {
+        "@tauri-apps/cli": "^1.5.0",
+        "@types/react": "^18.2.15",
+        "@types/react-dom": "^18.2.7",
+        "@typescript-eslint/eslint-plugin": "^6.8.0",
+        "@typescript-eslint/parser": "^6.8.0",
+        "@vitejs/plugin-react": "^4.0.3",
+        "autoprefixer": "^10.4.16",
+        "eslint": "^8.51.0",
+        "eslint-config-prettier": "^9.0.0",
+        "eslint-plugin-prettier": "^5.0.1",
+        "eslint-plugin-react": "^7.33.2",
+        "husky": "^8.0.3",
+        "postcss": "^8.4.31",
+        "prettier": "^3.0.3",
+        "tailwindcss": "^3.3.3",
+        "typescript": "^5.0.2",
+        "vite": "^4.4.4"
+    }
 }
