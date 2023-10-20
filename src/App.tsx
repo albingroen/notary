@@ -1,12 +1,23 @@
 function App() {
+    return <p>Home</p>
+}
+
+const queryClient = new QueryClient()
+
+export default function ExportedApp() {
     return (
-        <div className="pt-7">
-            <p>Notary</p>
-            <button className="bg-neutral-800 hover:bg-indigo-600 duration-150 hover:text-white transition-colors px-3 py-1.5 rounded-md active:bg-indigo-800">
-                New note
-            </button>
-        </div>
+        <QueryClientProvider client={queryClient}>
+            <HashRouter>
+                <Routes>
+                    <Route path="/" element={<RootLayout />}>
+                        <Route path="/" element={<App />} />
+                    </Route>
+                </Routes>
+            </HashRouter>
+        </QueryClientProvider>
     )
 }
 
-export default App
+import RootLayout from './layouts/root'
+import { HashRouter, Route, Routes } from 'react-router-dom'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
