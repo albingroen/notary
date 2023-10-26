@@ -4,7 +4,12 @@
 
 @layer base {
     html {
-        @apply dark:bg-neutral-800 dark:text-white;
+        @apply dark:bg-stone-900 dark:text-white;
+    }
+
+    body {
+        @apply antialiased;
+        text-rendering: optimizeLegibility;
     }
 
     /* Make Notary more macOS like by disabling selection of text, and using the default cursor where suited. */

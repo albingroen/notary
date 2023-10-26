@@ -16,6 +16,8 @@ tauri-build = { version = "1.5", features = [] }
 tauri = { version = "1.5", features = [ "global-shortcut-all", "fs-read-file", "fs-read-dir", "fs-create-dir", "dialog-ask", "clipboard-write-text", "fs-write-file", "fs-remove-file", "path-all", "fs-rename-file", "shell-open"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
+cocoa = "0.25"
+objc = "0.2"
 tauri-plugin-fs-extra = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v1" }
 
 [features]

@@ -10,7 +10,7 @@ export default function RootLayout() {
 
             <ResizeHandle />
 
-            <Panel className="bg-neutral-800">
+            <Panel className="bg-stone-800">
                 <Outlet />
             </Panel>
         </PanelGroup>
